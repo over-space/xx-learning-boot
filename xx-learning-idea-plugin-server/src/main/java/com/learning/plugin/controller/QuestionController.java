@@ -10,9 +10,7 @@ public class QuestionController {
 
     @GetMapping("/learning/question/test")
     public ResponseEntity<CommonResponse> test(){
-        CommonResponse commonResponse = new CommonResponse();
-        commonResponse.setData("ok");
-        return ResponseEntity.ok(commonResponse);
+        return ResponseEntity.ok(CommonResponse.success());
     }
 
 }
