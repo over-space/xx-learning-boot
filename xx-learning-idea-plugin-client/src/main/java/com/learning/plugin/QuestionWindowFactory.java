@@ -6,7 +6,7 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
-import com.learning.plugin.ui.ReadUI;
+import com.learning.plugin.ui.QuestionUI;
 import com.learning.plugin.util.HtmlRendererUtil;
 import com.learning.plugin.util.HttpUtil;
 import com.learning.plugin.vo.QuestionVO;
@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 public class QuestionWindowFactory implements ToolWindowFactory {
 
-    private static ReadUI readUI = new ReadUI();
+    private static QuestionUI readUI = new QuestionUI();
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {

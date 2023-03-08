@@ -2,7 +2,7 @@ package com.learning.plugin.ui;
 
 import javax.swing.*;
 
-public class ReadUI {
+public class QuestionUI {
 
     private JPanel mainPanel;
     private JTextPane textContent;

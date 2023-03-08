@@ -52,7 +52,7 @@ public final class HttpUtil{
     }
 
     public static void main(String[] args) {
-        String result = get("http://127.0.0.1:8081/learning/question/test");
+        String result = get("http://127.0.0.1:8081/question/random");
         System.out.println(result);
     }
 
