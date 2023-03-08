@@ -1,0 +1,14 @@
+[versions]
+project-version = "1.0.0"
+
+[libraries]
+xx-learning-common = {module = "xx-learning-boot:xx-learning-common", version.ref = "project-version"}
+xx-learning-logger = {module = "xx-learning-boot:xx-learning-logger", version.ref = "project-version"}
+jdbc-database-h2 = {module = "com.h2database:h2", version = "2.1.214"}
+jdbc-database-mysql = {module = "com.mysql:mysql-connector-j", version = "8.0.32"}
+
+[bundles]
+jdbcDatabase = ["jdbc-database-h2", "jdbc-database-mysql"]
+
+[plugins]
+springboot = { id = "org.springframework.boot", version = "2.7.9" }

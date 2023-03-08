@@ -6,4 +6,5 @@ public enum QuestionTypeEnum {
 
     CHOOSE,
 
+    MARKDOWN,
 }

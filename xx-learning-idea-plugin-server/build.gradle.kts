@@ -5,19 +5,19 @@ plugins {
 }
 
 group = "com.learning-boot"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-//    runtimeOnly("com.mysql:mysql-connector-j")
-    implementation("com.h2database:h2:2.1.214")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
+    implementation(libs.bundles.jdbcDatabase)
 }
 
 

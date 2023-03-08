@@ -22,6 +22,9 @@ intellij {
 dependencies {
     implementation("com.atlassian.commonmark:commonmark-ext-gfm-tables:0.17.0")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
+    implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
 }
 
 tasks {

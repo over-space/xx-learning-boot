@@ -1,15 +1,18 @@
 plugins {
     id("java")
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.8.10"
+    id("org.springframework.boot") version "2.7.9"
+    id("io.spring.dependency-management") version "1.1.0"
 }
 
 group = "com.learning-boot"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 allprojects {
     repositories {
+        gradlePluginPortal()
+        mavenLocal()
         if (!project.name.contains("plugin-client")) {
-            mavenLocal()
             maven { setUrl("https://maven.aliyun.com/repository/public") }
             maven { setUrl("https://maven.aliyun.com/repository/central") }
             maven { setUrl("https://maven.aliyun.com/repository/spring") }
@@ -36,6 +39,7 @@ subprojects {
     }
 }
 
+
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
@@ -43,6 +47,7 @@ tasks {
         targetCompatibility = "11"
     }
 }
+
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()

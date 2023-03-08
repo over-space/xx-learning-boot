@@ -1,10 +1,7 @@
 package com.learning.plugin.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "t_question")
@@ -12,9 +9,9 @@ public class QuestionEntity extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private QuestionTypeEnum questionType;
-
     private String title;
 
+    @Column(columnDefinition = "text default null")
     private String content;
 
     public QuestionTypeEnum getQuestionType() {

@@ -1,0 +1,58 @@
+package com.learning.netty.rpc;
+
+
+import com.esotericsoftware.reflectasm.MethodAccess;
+import com.learning.netty.rpc.prototype.RpcContent;
+
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class ServiceFactory {
+
+    private static ConcurrentHashMap<String, ConcurrentHashMap<String, Object>> registerServerMap = new ConcurrentHashMap<>();
+    private static ServiceFactory registerCenter = new ServiceFactory();
+
+    private static ConcurrentHashMap<String, Object> serverMap;
+
+    private static ConcurrentHashMap<Class, MethodAccess> methodAccessMap = new ConcurrentHashMap<>();
+
+    public static synchronized ServiceFactory getServiceFactory() {
+        return getServiceFactory(getModuleName());
+    }
+
+    public static synchronized ServiceFactory getServiceFactory(String moduleName) {
+        serverMap = registerServerMap.get(moduleName);
+        if (serverMap == null) {
+            registerServerMap.putIfAbsent(moduleName, new ConcurrentHashMap<>());
+            serverMap = registerServerMap.get(moduleName);
+            ;
+        }
+        return registerCenter;
+    }
+
+    public static void register(String interfaceName, Object server) {
+        serverMap.putIfAbsent(interfaceName, server);
+    }
+
+    public static Object get(String interfaceName) {
+        return serverMap.get(interfaceName);
+    }
+
+    public static String getModuleName() {
+        // 动态获取项目
+        return "xx-learning-starter";
+    }
+
+    public static Object invoke(RpcContent content) {
+        return invoke(content.getName(), content.getMethodName(), content.getParameterTypes(), content.getArgs());
+    }
+
+    public static Object invoke(String interfaceName, String methodName, Class<?>[] parameterTypes, Object[] args) {
+        Object server = getServiceFactory().get(interfaceName);
+        MethodAccess methodAccess = getMethodAccess(server.getClass());
+        return methodAccess.invoke(server, methodName, parameterTypes, args);
+    }
+
+    private static MethodAccess getMethodAccess(Class clazz) {
+        return methodAccessMap.computeIfAbsent(clazz, key -> MethodAccess.get(clazz));
+    }
+}
