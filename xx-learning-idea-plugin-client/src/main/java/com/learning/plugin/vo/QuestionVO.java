@@ -33,4 +33,13 @@ public class QuestionVO implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "QuestionVO{" +
+                "businessId=" + businessId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

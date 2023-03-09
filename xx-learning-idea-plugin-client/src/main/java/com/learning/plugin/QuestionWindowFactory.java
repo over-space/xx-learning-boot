@@ -1,15 +1,20 @@
 package com.learning.plugin;
 
 import com.alibaba.fastjson2.JSON;
+import com.intellij.ide.plugins.cl.PluginClassLoader;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import com.intellij.util.lang.UrlClassLoader;
 import com.learning.plugin.ui.QuestionUI;
 import com.learning.plugin.util.HtmlRendererUtil;
 import com.learning.plugin.util.HttpUtil;
 import com.learning.plugin.vo.QuestionVO;
+import com.learning.plugin.vo.ResponseResult;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.event.ActionEvent;
@@ -20,6 +25,8 @@ import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
 
 public class QuestionWindowFactory implements ToolWindowFactory {
+
+    private static Logger logger = LogManager.getLogger(QuestionWindowFactory.class);
 
     private static QuestionUI readUI = new QuestionUI();
 
@@ -67,11 +74,12 @@ public class QuestionWindowFactory implements ToolWindowFactory {
     }
 
     private QuestionVO get(){
-        String response = HttpUtil.get("http://127.0.0.1:8081/question/random");
-        return JSON.parseObject(response, QuestionVO.class);
+        ResponseResult<QuestionVO> responseResult = HttpUtil.get("http://127.0.0.1:8081/question/random", QuestionVO.class);
+        return responseResult.getData();
     }
 
     private String readFile(File file) throws IOException {
+
         byte[] bytes = new byte[1024 * 1024];
 
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
