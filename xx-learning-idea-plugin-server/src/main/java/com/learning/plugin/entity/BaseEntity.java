@@ -1,9 +1,12 @@
 package com.learning.plugin.entity;
 
+import com.learning.plugin.repository.listener.EntityEventListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@EntityListeners(EntityEventListener.class)
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 

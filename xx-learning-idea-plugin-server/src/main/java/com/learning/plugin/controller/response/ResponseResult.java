@@ -1,4 +1,4 @@
-package com.learning.plugin.controller.request;
+package com.learning.plugin.controller.response;
 
 import java.io.Serializable;
 

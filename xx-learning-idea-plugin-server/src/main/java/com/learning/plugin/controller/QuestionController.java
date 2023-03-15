@@ -1,11 +1,11 @@
 package com.learning.plugin.controller;
 
 import com.alibaba.fastjson2.JSON;
-import com.learning.plugin.controller.request.ResponseResult;
+import com.learning.plugin.controller.request.QuestionRequest;
+import com.learning.plugin.controller.response.ResponseResult;
 import com.learning.plugin.entity.QuestionEntity;
 import com.learning.plugin.entity.QuestionTypeEnum;
 import com.learning.plugin.service.QuestionService;
-import org.h2.util.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +29,15 @@ public class QuestionController {
         return ResponseEntity.ok(ResponseResult.success(questionEntity));
     }
 
+    @GetMapping("/question/random/text")
+    public String randomText(){
+        QuestionEntity questionEntity = questionService.random();
+        return questionEntity.getContent();
+    }
+
     @PostMapping("/question/save")
-    public ResponseEntity<ResponseResult> save(@RequestBody QuestionEntity questionEntity){
-        questionService.save(questionEntity);
+    public ResponseEntity<ResponseResult> save(@RequestBody QuestionRequest request){
+        questionService.updateOrSave(request);
         return ResponseEntity.ok(ResponseResult.success());
     }
 
