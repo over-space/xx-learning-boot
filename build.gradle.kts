@@ -41,7 +41,6 @@ subprojects {
 
 
 tasks {
-    // Set the JVM compatibility versions
     withType<JavaCompile> {
         sourceCompatibility = "11"
         targetCompatibility = "11"
@@ -53,3 +52,6 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
+tasks.withType<Jar>() {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
