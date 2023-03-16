@@ -25,7 +25,7 @@ import java.util.Arrays;
 public class WordCountTest extends BaseTest {
     private static final Logger logger = LogManager.getLogger(WordCountTest.class);
 
-    JavaSparkContext getSparkConf(String appName){
+    private JavaSparkContext getSparkConf(String appName){
         SparkConf conf = new SparkConf();
         conf.setAppName(appName);
         conf.setMaster("local");
@@ -64,10 +64,11 @@ public class WordCountTest extends BaseTest {
         result.foreach((VoidFunction<Tuple2<String, Integer>>) tuple2 -> {
             logger.info("{}\t{}", tuple2._1, tuple2._2);
         });
+
     }
 
     @Test
-    void testUnion(){
+    void testSparkAPI(){
 
         JavaSparkContext context = getSparkConf("j-spack-join-01");
 
@@ -78,6 +79,7 @@ public class WordCountTest extends BaseTest {
         JavaRDD<Integer> unionRDD = listRDD1.union(listRDD2);
         unionRDD.foreach((VoidFunction<Integer>) num -> logger.info("union result : {}", num));
         line();
+
 
         // 交集
         JavaRDD<Integer> intersectionRDD = listRDD1.intersection(listRDD2);
@@ -121,7 +123,26 @@ public class WordCountTest extends BaseTest {
         // 相同的tuple2._1分组，value合并。
         JavaPairRDD cogroupRDD = pairRDD1.cogroup(pairRDD2);
         cogroupRDD.foreach((VoidFunction) o -> logger.info("cogroup result : {}", o));
-
     }
 
+    @Test
+    void testCogroup(){
+        JavaSparkContext context = getSparkConf("j-spack-cogroup-01");
+
+        JavaPairRDD pairRDD1 = context.parallelizePairs(Lists.newArrayList(new Tuple2("lisi", 30),new Tuple2("lisi", 26), new Tuple2("zhangsan", 20), new Tuple2("wangwu", 25), new Tuple2("zhaoliu", 32)));
+        JavaPairRDD pairRDD2 = context.parallelizePairs(Lists.newArrayList(new Tuple2("jane", 22), new Tuple2("zhangsan", 28), new Tuple2("cat", 21), new Tuple2("jay", 30),new Tuple2("lisi", 30)));
+
+        JavaPairRDD cogroupRDD = pairRDD1.cogroup(pairRDD2);
+        cogroupRDD.foreach((VoidFunction) o -> logger.info("cogroup result : {}", o));
+
+        line();
+
+        JavaPairRDD groupByKeyRDD = cogroupRDD.sortByKey(false);
+
+        groupByKeyRDD.foreach((VoidFunction) o -> logger.info("sortByKey result : {}", o));
+
+        while (true){
+
+        }
+    }
 }
