@@ -122,7 +122,24 @@ class WordCountTest extends ScalaBaseTest {
     val countRDD = sum.join(count)
     val avg = countRDD.mapValues(v => v._1 / v._2)
     avg.foreach(println)
+
+    print("combineByKey")
+    val combineRDD: RDD[(String, (Int, Int))] = dataRDD.combineByKey(
+      (v: Int) => {
+        (v, 1)
+      },
+      (oldValue: (Int, Int), newValue: Int) => {
+        (oldValue._1 + newValue, oldValue._2 + 1)
+      },
+      (v1: (Int, Int), v2: (Int, Int)) => {
+        (v1._1 + v2._1, v1._2 + v2._2)
+      })
+
+    val avg2 = combineRDD.mapValues(v => v._1 / v._2)
+    avg2.foreach(println)
+
   }
+
 
   test("行转列"){
     val context = getSparkContext("scala-row-01")
