@@ -22,14 +22,13 @@ import java.util.Arrays;
  * @author over.li
  * @since 2023/3/16
  */
-public class WordCountTest extends BaseTest {
-    private static final Logger logger = LogManager.getLogger(WordCountTest.class);
+public class JavaWordCountTest extends BaseTest {
+    private static final Logger logger = LogManager.getLogger(JavaWordCountTest.class);
 
     private JavaSparkContext getSparkConf(String appName){
         SparkConf conf = new SparkConf();
-        conf.setAppName(appName);
         conf.setMaster("local");
-
+        conf.setAppName(appName);
         JavaSparkContext context = new JavaSparkContext(conf);
         context.setLogLevel("WARN");
         return context;
@@ -51,7 +50,7 @@ public class WordCountTest extends BaseTest {
             logger.info("{}", word);
         });
 
-        JavaPairRDD<String, Integer> pairRDD = wordRDD.mapToPair((PairFunction<String, String, Integer>) word -> new Tuple2<>(word, 1));
+        JavaPairRDD<String, Integer> pairRDD = wordRDD.mapToPair((PairFunction<String, String, Integer>) word -> new Tuple2<String, Integer>(word, 1));
 
         line();
         pairRDD.foreach((VoidFunction<Tuple2<String, Integer>>) tuple2 -> {

@@ -1,5 +1,7 @@
 plugins {
     id("java")
+    id("scala")
+    id("application")
     kotlin("jvm") version "1.8.10"
     id("org.springframework.boot") version "2.7.9"
     id("io.spring.dependency-management") version "1.1.0"
