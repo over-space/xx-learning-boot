@@ -25,8 +25,12 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-/target/
-.bsp
+
+# SBT target and build directories
+target/
+build/
+project/project/
+project/target/
 
 ### NetBeans ###
 /nbproject/private/
