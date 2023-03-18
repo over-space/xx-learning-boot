@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/7/21
  */
 public class SystemTimer implements Timer {

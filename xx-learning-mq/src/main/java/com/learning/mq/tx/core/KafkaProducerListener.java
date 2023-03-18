@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/16
  */
 @Component

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 /**
  * 生成窗口最大值数组
  *
- * @author 李芳
+ * @author over.li
  * @since 2022/11/28
  */
 public class ZCY_ArraySliding extends BaseTest {

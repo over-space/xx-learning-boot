@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/13
  */
 public interface MsgRecordService {

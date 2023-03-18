@@ -1,7 +1,7 @@
 package com.learning.leetcode.timer;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/7/21
  */
 public interface Timer {

@@ -9,7 +9,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 import javax.annotation.Resource;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/13
  */
 @Component("transactionManager")

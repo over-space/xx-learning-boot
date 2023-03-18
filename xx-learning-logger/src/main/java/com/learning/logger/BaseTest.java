@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/21
  */
 public abstract class BaseTest implements Serializable {

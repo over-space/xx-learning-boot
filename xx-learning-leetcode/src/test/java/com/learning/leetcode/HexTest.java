@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/10/14
  */
 public class HexTest extends BaseTest {

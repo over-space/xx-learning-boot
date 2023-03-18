@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/13
  */
 @Entity

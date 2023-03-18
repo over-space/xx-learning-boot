@@ -3,7 +3,7 @@ package com.learning.mq.tx.bo;
 import java.io.Serializable;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/13
  */
 public class MessageBody<T extends Serializable> implements Serializable {

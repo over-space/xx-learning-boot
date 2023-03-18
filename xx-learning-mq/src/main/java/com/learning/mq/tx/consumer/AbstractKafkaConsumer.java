@@ -7,7 +7,7 @@ import org.springframework.kafka.support.Acknowledgment;
 import java.util.List;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/19
  */
 public abstract class AbstractKafkaConsumer implements MessageConsumer {

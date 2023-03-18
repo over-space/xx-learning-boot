@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/19
  */
 public final class TransactionMessageThreadLocal {

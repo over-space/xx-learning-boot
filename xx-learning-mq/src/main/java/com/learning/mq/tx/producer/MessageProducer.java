@@ -8,7 +8,7 @@ import com.learning.mq.tx.service.MsgRecordService;
 import java.util.List;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/9/14
  */
 public interface MessageProducer {

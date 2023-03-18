@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/7/21
  */
 public class TimingWheel {

@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * @author 李芳
+ * @author over.li
  * @since 2022/10/9
  */
 public abstract class AbstractMessageConsumer<T extends EventFactory> implements EventHandler<T> {
