@@ -39,6 +39,10 @@ allprojects {
             targetCompatibility = "11"
         }
     }
+
+    tasks.withType<Jar>() {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 }
 
 subprojects {
@@ -52,8 +56,4 @@ subprojects {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
-}
-
-tasks.withType<Jar>() {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

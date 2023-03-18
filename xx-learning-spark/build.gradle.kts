@@ -8,7 +8,7 @@ dependencies {
     implementation(libs.bundles.jdbcDatabase)
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
-    implementation(project(mapOf("path" to ":xx-learning-scala")))
+    // implementation(project(mapOf("path" to ":xx-learning-scala")))
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")

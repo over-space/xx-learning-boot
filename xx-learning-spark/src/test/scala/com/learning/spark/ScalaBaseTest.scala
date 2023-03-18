@@ -1,6 +1,6 @@
 package com.learning.spark
 
-import org.junit.BeforeClass
+import org.junit.{AfterClass, BeforeClass}
 import org.junit.runner.RunWith
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.junit.JUnitRunner
@@ -10,7 +10,7 @@ import org.scalatestplus.junit.JUnitRunner
  * @since 2023/3/17
  */
 @RunWith(classOf[JUnitRunner])
-class ScalaBaseTest extends AnyFunSuite with Serializable {
+trait ScalaBaseTest extends AnyFunSuite with Serializable {
 
   def line(): Unit = {
     println("*************************************************************************************")
@@ -20,9 +20,17 @@ class ScalaBaseTest extends AnyFunSuite with Serializable {
     println(s"************************************ $msg *******************************************")
   }
 
-  testsFor({
+  @BeforeClass
+  def before(){
     println("================================================================================================")
     println("-------------------------------------开始执行测试方法---------------------------------------------")
     println("")
-  })
+  }
+
+  @AfterClass
+  def after(): Unit = {
+    println("")
+    println("-------------------------------------测试方法执行完成---------------------------------------------")
+    println("================================================================================================")
+  }
 }
