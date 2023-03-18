@@ -10,7 +10,7 @@ import org.scalatestplus.junit.JUnitRunner
  * @since 2023/3/17
  */
 @RunWith(classOf[JUnitRunner])
-class ScalaBaseTest extends AnyFunSuite{
+class ScalaBaseTest extends AnyFunSuite with Serializable {
 
   def line(): Unit = {
     println("*************************************************************************************")

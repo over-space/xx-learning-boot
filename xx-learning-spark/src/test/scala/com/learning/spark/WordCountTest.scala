@@ -3,6 +3,9 @@ package com.learning.spark
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
+import scala.collection.mutable.ListBuffer
+
+
 /**
  * @author over.li
  * @since 2023/3/17
@@ -56,9 +59,9 @@ class WordCountTest extends ScalaBaseTest {
     val pairRDD: RDD[(String, Int)] = fileRDD.map(line => (line.split("\t")(5), 1))
     val pvTotalRDD: RDD[(String, Int)] = pairRDD.reduceByKey(_ + _)
 
-//    val swapPVTotalRDD: RDD[(Int, String)] = pvTotalRDD.map(_.swap)
-//    val sortedRDD: RDD[(Int, String)] = swapPVTotalRDD.sortByKey(false)
-//    val sortedSwapRDD: RDD[(String, Int)] = sortedRDD.map(_.swap)
+    //    val swapPVTotalRDD: RDD[(Int, String)] = pvTotalRDD.map(_.swap)
+    //    val sortedRDD: RDD[(Int, String)] = swapPVTotalRDD.sortByKey(false)
+    //    val sortedSwapRDD: RDD[(String, Int)] = sortedRDD.map(_.swap)
     val sortedSwapRDD = pvTotalRDD.sortBy(_._2, false)
 
     val result: Array[(String, Int)] = sortedSwapRDD.take(5)
@@ -94,7 +97,7 @@ class WordCountTest extends ScalaBaseTest {
     result.foreach(println)
   }
 
-  test("sum,count,avg,max,min"){
+  test("sum,count,avg,max,min") {
 
     val context = getSparkContext("scala-sum-01")
 
@@ -141,7 +144,7 @@ class WordCountTest extends ScalaBaseTest {
   }
 
 
-  test("行转列"){
+  test("行转列") {
     val context = getSparkContext("scala-row-01")
 
     val dataRDD: RDD[(String, Int)] = context.parallelize(List(("zhangsan", 85), ("zhangsan", 74),
@@ -152,8 +155,30 @@ class WordCountTest extends ScalaBaseTest {
     groupRDD.foreach(println)
     line()
 
-    val result:RDD[(String, Int)] = groupRDD.flatMap(k => k._2.map(v => (k._1, v)).iterator)
+    val result: RDD[(String, Int)] = groupRDD.flatMap(k => k._2.map(v => (k._1, v)).iterator)
     result.foreach(println)
+
+  }
+
+  test("分区操作") {
+    var context: SparkContext = new SparkContext("local", "scala-partition-01");
+    context.setLogLevel("ERROR")
+    val dataRDD:RDD[(Int)] = context.parallelize(List(1,2,3,4,5,6,7,8,9,10), 2)
+
+    val iteratorRDD1:RDD[(String)] = dataRDD.mapPartitionsWithIndex((pi, pt) => {
+//      print("连接数据库.....")
+//      print("查询数据")
+      val list: ListBuffer[String] = new ListBuffer[String]
+      while(pt.hasNext){
+        val num = pt.next()
+        list.+=(s"selected result $pi - $num")
+      }
+//      print("关闭数据库连接....")
+      list.iterator
+    })
+
+    iteratorRDD1.foreach(println)
+
   }
 
 }

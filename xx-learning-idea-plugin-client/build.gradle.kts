@@ -3,12 +3,6 @@ plugins {
     id("org.jetbrains.intellij") version "1.13.2"
 }
 
-group = "com.learning.boot"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
@@ -24,8 +18,6 @@ dependencies {
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
     implementation("org.slf4j:slf4j-api:2.0.6")
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    implementation("org.apache.logging.log4j:log4j-api:2.20.0")
     implementation("commons-io:commons-io:2.11.0")
 }
 

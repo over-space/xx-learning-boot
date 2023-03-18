@@ -2,13 +2,6 @@ plugins {
     id("java")
 }
 
-group = "com.learning-boot"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation(project(mapOf("path" to ":xx-learning-common")))
     implementation("io.netty:netty-all:4.1.89.Final")

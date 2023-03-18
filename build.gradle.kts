@@ -3,18 +3,20 @@ plugins {
     id("scala")
     id("application")
     kotlin("jvm") version "1.8.10"
-    id("org.springframework.boot") version "2.7.9"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "2.7.9" apply false
+    id("io.spring.dependency-management") version "1.1.0" apply false
 }
 
-group = "com.learning-boot"
-version = "1.0.0"
-
 allprojects {
+
+    group = "com.learning-boot"
+    version = "1.0.0"
+
     repositories {
         gradlePluginPortal()
         mavenLocal()
-        if (!project.name.contains("plugin-client")) {
+        if (project.name.contains("plugin-client")) {
+        }else {
             maven { setUrl("https://maven.aliyun.com/repository/public") }
             maven { setUrl("https://maven.aliyun.com/repository/central") }
             maven { setUrl("https://maven.aliyun.com/repository/spring") }
@@ -30,6 +32,13 @@ allprojects {
         }
         mavenCentral()
     }
+
+    tasks {
+        withType<JavaCompile> {
+            sourceCompatibility = "11"
+            targetCompatibility = "11"
+        }
+    }
 }
 
 subprojects {
@@ -40,15 +49,6 @@ subprojects {
         implementation("org.apache.logging.log4j:log4j-api:2.20.0")
     }
 }
-
-
-tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
-    }
-}
-
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()

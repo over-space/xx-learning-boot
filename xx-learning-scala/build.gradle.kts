@@ -3,13 +3,6 @@ plugins {
     id("scala")
 }
 
-group = "com.learning-boot"
-version = "1.0.0"
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation("org.apache.spark:spark-core_2.12:2.4.8")
     implementation("org.scala-lang:scala-library:2.12.0")

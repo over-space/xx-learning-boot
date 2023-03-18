@@ -1,14 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "2.7.9"
-    id("io.spring.dependency-management") version "1.1.0"
-}
-
-group = "com.learning-boot"
-version = "1.0.0"
-
-repositories {
-    mavenCentral()
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 dependencies {

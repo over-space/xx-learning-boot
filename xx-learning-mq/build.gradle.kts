@@ -1,11 +1,8 @@
 plugins {
     java
-    id("org.springframework.boot") version "2.7.9"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
-
-group = "com.learning-boot"
-version = "1.0.0"
 
 dependencies {
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
