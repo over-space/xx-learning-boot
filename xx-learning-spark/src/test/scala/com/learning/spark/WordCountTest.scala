@@ -1,7 +1,9 @@
 package com.learning.spark
 
+import org.apache.logging.log4j.{LogManager, Logger}
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
+import org.junit.jupiter.api.Test
 
 import scala.collection.mutable.ListBuffer
 
@@ -18,10 +20,16 @@ class WordCountTest extends ScalaBaseTest {
         content
     }
 
-    test("distinct") {
+    @Test
+    def testLogger(): Unit = {
+        line()
+    }
+
+    @Test
+    def testDistinct {
         val context = getSparkContext("scala-test-01")
 
-        val listRDD = context.parallelize(List(new Tuple2("hello", "word"), new Tuple2("hello", "scala"), Tuple2("hello", "word")))
+        val listRDD:RDD[Tuple2[String, String]] = context.parallelize(List(new Tuple2("hello", "word"), new Tuple2("hello", "scala"), Tuple2("hello", "word")))
         listRDD.foreach(println)
 
         line()
@@ -29,29 +37,27 @@ class WordCountTest extends ScalaBaseTest {
         distinctRDD.foreach(println)
     }
 
-    test("testWordCount") {
+    @Test
+    def testWordCount {
 
         val context = getSparkContext("scala-word-count-01")
-        val fileRDD = context.textFile("xx-learning-spark/src/test/resources/data/dict.txt")
+        val fileRDD = context.textFile("src/test/resources/data/dict.txt")
 
         val wordRDD = fileRDD.flatMap(_.split(" "))
-        wordRDD.foreach(println)
-        line()
+        console(wordRDD)
 
         val pairRDD = wordRDD.map(Tuple2(_, 1))
-        pairRDD.foreach(println)
-        line()
-
+        console(pairRDD)
 
         val result = pairRDD.reduceByKey(_ + _)
-        result.foreach(println)
-        line()
+        console(result)
     }
 
     /**
      * 根据PV统计前5的网站
      */
-    test("pv") {
+    @Test
+    def testPV {
         // 119.84.168.158	贵州	  2018-11-12	1542011088715	5857482780010208273	www.dangdang.com	Buy
         val context = getSparkContext("scala-pv-01")
         val fileRDD = context.textFile("xx-learning-spark/src/test/resources/data/pvuv.txt", 5)
@@ -66,14 +72,14 @@ class WordCountTest extends ScalaBaseTest {
 
         val result: Array[(String, Int)] = sortedSwapRDD.take(5)
 
-        line()
-        result.foreach(println)
+        console(result)
     }
 
     /**
      * 统计UV数据量前5的网站
      */
-    test("uv") {
+    @Test
+    def testUV {
         // 119.84.168.158	贵州	  2018-11-12	1542011088715	5857482780010208273	www.dangdang.com	Buy
         val context = getSparkContext("scala-uv-01")
         val fileRDD = context.textFile("xx-learning-spark/src/test/resources/data/pvuv.txt", 5)
@@ -93,11 +99,11 @@ class WordCountTest extends ScalaBaseTest {
         val sortedRDD = totalRDD.sortBy(_._2, false)
         val result = sortedRDD.take(5)
 
-        line()
-        result.foreach(println)
+        console(result)
     }
 
-    test("sum,count,avg,max,min") {
+    @Test
+    def testSumCountMaxMinAvg {
 
         val context = getSparkContext("scala-sum-01")
 
@@ -144,7 +150,8 @@ class WordCountTest extends ScalaBaseTest {
     }
 
 
-    test("行转列") {
+    @Test
+    def testRowToColumn(): Unit = {
         val context = getSparkContext("scala-row-01")
 
         val dataRDD: RDD[(String, Int)] = context.parallelize(List(("zhangsan", 85), ("zhangsan", 74),
@@ -160,7 +167,8 @@ class WordCountTest extends ScalaBaseTest {
 
     }
 
-    test("分区操作01") {
+    @Test
+    def testPartition01 {
         var context: SparkContext = new SparkContext("local", "scala-partition-01");
         val dataRDD: RDD[(Int)] = context.parallelize(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 2)
 
@@ -175,22 +183,23 @@ class WordCountTest extends ScalaBaseTest {
             print("关闭数据库连接....")
             list.iterator
         })
-        iteratorRDD1.foreach(println)
+        console(iteratorRDD1)
     }
 
-    test("分区操作02") {
+    @Test
+    def testPartition02 {
         var context: SparkContext = new SparkContext("local", "scala-partition-02");
         val dataRDD: RDD[(Int)] = context.parallelize(List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 2)
 
-        dataRDD.mapPartitionsWithIndex((pi, pt) => {
+        val result = dataRDD.mapPartitionsWithIndex((pi, pt) => {
 
             print("连接数据库...")
 
             new Iterator[String] {
                 override def hasNext: Boolean = {
-                    if(pt.hasNext){
+                    if (pt.hasNext) {
                         true
-                    }else{
+                    } else {
                         print("关闭数据库连接")
                         false;
                     }
@@ -201,6 +210,8 @@ class WordCountTest extends ScalaBaseTest {
                     s"select result $pi、" + pt.next()
                 }
             }
-        }).foreach(println)
+        })
+
+        console(result)
     }
 }
