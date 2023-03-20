@@ -78,6 +78,7 @@ class TemperatureTopNTest extends SparkBaseTest {
     }
 
     @Test
+    @Deprecated
     def testTemperatureTopN03(): Unit = {
         var context: SparkContext = new SparkContext("local", "scala-temperature-02");
         val fileRDD = context.textFile("src/test/resources/data/temperature.txt")
@@ -99,5 +100,67 @@ class TemperatureTopNTest extends SparkBaseTest {
         val maped: RDD[((Int, Int), (Int, Int))] = reduced.map(t2 => ((t2._1._1, t2._1._2), (t2._1._3, t2._2)))
         val grouped: RDD[((Int, Int), Iterable[(Int, Int)])] = maped.groupByKey()
         console(grouped)
+    }
+
+    @Test
+    def testTemperatureTopN04(): Unit = {
+        var context: SparkContext = new SparkContext("local", "scala-temperature-02");
+        val fileRDD = context.textFile("src/test/resources/data/temperature.txt")
+
+        val dataRDD = fileRDD.map(line => line.split(" "))
+            .map(arr => {
+                val dateArray: Array[String] = arr(0).split("-")
+                // (year, month, day, temperature)
+                (dateArray(0).toInt, dateArray(1).toInt, dateArray(2).toInt, arr(1).toInt)
+            })
+
+        val mapRDD = dataRDD.map(x => ((x._1, x._2), (x._3, x._4)))
+
+        implicit def ordering = new Ordering[(Int, Int)] {
+            override def compare(x: (Int, Int), y: (Int, Int)): Int = y._2.compare(x._2);
+        }
+
+        val result = mapRDD.combineByKey(
+            // 参数1,参数第一次进来
+            (v1: (Int, Int)) => {
+                Array(v1, (0, 0), (0, 0));
+            },
+            (oldValue: Array[(Int, Int)], newValue: (Int, Int)) => {
+                // 去重、排序
+                // 1. 日 相同，比较温度大小
+                // 2. 日 不同，放入Array中
+                var flag = 0;
+                for (i <- 0 until oldValue.length) {
+                    var elem = oldValue(i);
+                    if (elem._1 == newValue._1) { // 日相同
+                        if (elem._2 < newValue._2) { // 温度比较
+                            flag = 1
+                            oldValue(i) = newValue;
+                        } else {
+                            flag = 2;
+                        }
+                    }
+                }
+
+                if (flag == 0) {
+                    // oldValue(2) = newValue;
+                    oldValue(oldValue.length - 1) = newValue;
+                }
+
+                // oldValue.sorted(ordering);
+                scala.util.Sorting.quickSort(oldValue)
+                oldValue;
+            },
+            (v1: Array[(Int, Int)], v2: Array[(Int, Int)]) => {
+                val all = v1.union(v2)
+                // all.sorted
+                scala.util.Sorting.quickSort(all)
+                all
+            }
+        )
+
+        console(result.map(x => (x._1, x._2.toList)))
+
+        pause()
     }
 }

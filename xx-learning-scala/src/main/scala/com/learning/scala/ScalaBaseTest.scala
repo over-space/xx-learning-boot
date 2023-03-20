@@ -43,4 +43,10 @@ class ScalaBaseTest extends Serializable {
         })
         logger.info("")
     }
+
+    def pause(): Unit = {
+        while (true){
+
+        }
+    }
 }
