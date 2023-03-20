@@ -11,9 +11,17 @@ jdbc-database-mysql = {module = "com.mysql:mysql-connector-j", version = "8.0.32
 junit-jupiter-api = {module = "org.junit.jupiter:junit-jupiter-api", version.ref="junit-jupiter-version"}
 junit-jupiter-engine = {module = "org.junit.jupiter:junit-jupiter-engine", version.ref="junit-jupiter-version"}
 
+scala-lang = {module = "org.scala-lang:scala-library", version = "2.12.0"}
+typesafe-akka = {module = "com.typesafe.akka:akka-actor_2.12", version = "2.4.20"}
+
+logging-log4j-core = {module = "org.apache.logging.log4j:log4j-core", version = "2.20.0"}
+logging-log4j-api = {module = "org.apache.logging.log4j:log4j-api", version = "2.20.0"}
+
 [bundles]
 jdbc-database = ["jdbc-database-h2", "jdbc-database-mysql"]
 junit-jupiter = ["junit-jupiter-api", "junit-jupiter-engine"]
+scala = ["scala-lang", "typesafe-akka"]
+logging-log4j = ["logging-log4j-core", "logging-log4j-api"]
 
 [plugins]
 springboot = { id = "org.springframework.boot", version = "2.7.9" }
