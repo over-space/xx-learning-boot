@@ -1,5 +1,6 @@
 [versions]
 project-version = "1.0.0"
+junit-jupiter-version = "5.9.2"
 
 [libraries]
 xx-learning-common = {module = "xx-learning-boot:xx-learning-common", version.ref = "project-version"}
@@ -7,8 +8,12 @@ xx-learning-logger = {module = "xx-learning-boot:xx-learning-logger", version.re
 jdbc-database-h2 = {module = "com.h2database:h2", version = "2.1.214"}
 jdbc-database-mysql = {module = "com.mysql:mysql-connector-j", version = "8.0.32"}
 
+junit-jupiter-api = {module = "org.junit.jupiter:junit-jupiter-api", version.ref="junit-jupiter-version"}
+junit-jupiter-engine = {module = "org.junit.jupiter:junit-jupiter-engine", version.ref="junit-jupiter-version"}
+
 [bundles]
-jdbcDatabase = ["jdbc-database-h2", "jdbc-database-mysql"]
+jdbc-database = ["jdbc-database-h2", "jdbc-database-mysql"]
+junit-jupiter = ["junit-jupiter-api", "junit-jupiter-engine"]
 
 [plugins]
 springboot = { id = "org.springframework.boot", version = "2.7.9" }

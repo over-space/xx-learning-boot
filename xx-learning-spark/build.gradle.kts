@@ -5,13 +5,11 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.bundles.jdbcDatabase)
+    implementation(libs.bundles.jdbc.database)
+    testImplementation(libs.bundles.junit.jupiter)
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
     // implementation(project(mapOf("path" to ":xx-learning-scala")))
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 
     implementation("org.apache.logging.log4j:log4j-core:2.20.0")
     implementation("org.apache.logging.log4j:log4j-api:2.20.0")

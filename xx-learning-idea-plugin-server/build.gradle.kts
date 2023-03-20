@@ -10,7 +10,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
-    implementation(libs.bundles.jdbcDatabase)
+    implementation(libs.bundles.jdbc.database)
 }
 
 
