@@ -10,7 +10,7 @@ dependencies {
     testImplementation(libs.bundles.junit.jupiter)
 
     implementation(project(mapOf("path" to ":xx-learning-common")))
-    implementation(project(mapOf("path" to ":xx-learning-scala")))
+    testImplementation(project(mapOf("path" to ":xx-learning-scala")))
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
 
     implementation("org.apache.spark:spark-core_2.12:2.4.8")

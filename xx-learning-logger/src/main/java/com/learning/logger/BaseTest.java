@@ -7,10 +7,8 @@ import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.logging.log4j.core.impl.Log4jContextFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import java.io.Serializable;
-import java.net.URL;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;

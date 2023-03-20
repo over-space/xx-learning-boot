@@ -1,11 +1,8 @@
-package com.learning.spark
+package com.learning.scala
 
 import org.apache.logging.log4j.{LogManager, Logger}
-import org.apache.spark.rdd.RDD
-import org.junit.jupiter.api.TestInstance.Lifecycle
 import org.junit.jupiter.api.{AfterAll, BeforeAll, TestInstance}
-
-import scala.reflect.ClassTag
+import org.junit.jupiter.api.TestInstance.Lifecycle
 
 /**
  * @author over.li
@@ -39,13 +36,6 @@ class ScalaBaseTest extends Serializable {
         logger.info("================================================================================================")
     }
 
-    def console[T](iterator:RDD[T]): Unit = {
-        logger.info("")
-        iterator.foreach(v => {
-            logger.info(s"$v")
-        })
-        logger.info("")
-    }
     def console[T](list:Array[T]): Unit = {
         logger.info("")
         list.foreach(v => {
