@@ -2,7 +2,7 @@
 <Configuration status="warn" name="XInclude">
 
     <Properties>
-        <Property name="PATTERN" value="XX-LEARNING: %d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %-40.40c{1.} :  %m%n"/>
+        <Property name="PATTERN" value="XX-LEARNING: %d{yyyy/MM/dd HH:mm:ss.SSS} %5p [%.10t]{20} %-40.40c{1.} :  %m%n"/>
     </Properties>
 
     <Appenders>
