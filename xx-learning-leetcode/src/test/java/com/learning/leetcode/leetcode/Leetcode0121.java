@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 
 /**
  * 121. 买卖股票的最佳时机

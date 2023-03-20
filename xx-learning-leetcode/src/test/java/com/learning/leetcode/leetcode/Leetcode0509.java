@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 
 /**
  * 509. 斐波那契数

@@ -1,7 +1,7 @@
 package com.learning.leetcode.custom;
 
-import com.learning.BaseTest;
-import org.testng.annotations.Test;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;

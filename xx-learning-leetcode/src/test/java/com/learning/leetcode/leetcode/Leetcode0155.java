@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 
 import java.util.Deque;
 import java.util.LinkedList;

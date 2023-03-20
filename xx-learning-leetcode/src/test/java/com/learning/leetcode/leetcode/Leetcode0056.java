@@ -1,7 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import com.alibaba.fastjson.JSONArray;
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,8 +14,6 @@ public class Leetcode0056 extends BaseTest {
     @Test
     void test() {
         int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        int[][] merge = merge2(intervals);
-        System.out.println(JSONArray.toJSON(merge));
     }
 
     public int[][] merge2(int[][] intervals) {
@@ -51,8 +48,6 @@ public class Leetcode0056 extends BaseTest {
 
         // 先按数组第一位排序
         Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
-        System.out.println(JSONArray.toJSON(intervals));
-
 
         List<int[]> result = new ArrayList<>();
 

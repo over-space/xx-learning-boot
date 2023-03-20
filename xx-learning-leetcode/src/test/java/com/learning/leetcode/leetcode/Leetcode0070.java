@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 
 /**
  * 70. 爬楼梯

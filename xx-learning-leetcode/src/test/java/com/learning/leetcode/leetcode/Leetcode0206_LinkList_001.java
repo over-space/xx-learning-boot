@@ -1,8 +1,8 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import com.learning.leetcode.base.ListNode;
-import org.testng.annotations.Test;
+import com.learning.leetcode.leetcode.base.ListNode;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * 反转一个单链表。

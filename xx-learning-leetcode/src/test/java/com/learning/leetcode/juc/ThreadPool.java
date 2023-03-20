@@ -1,16 +1,18 @@
 package com.learning.leetcode.juc;
 
-import org.testng.annotations.Test;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 /**
  * @author lifang
  * @since 2022/1/4
  */
-public class ThreadPool {
+public class ThreadPool extends BaseTest {
 
     @Test
     public void test() {
@@ -29,6 +31,19 @@ public class ThreadPool {
                 System.out.println(Thread.currentThread().getName());
             });
         }
+    }
+
+    @Test
+    void testParallelStream(){
+
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "3");
+
+        IntStream.rangeClosed(0, 1000).parallel().forEach(num -> {
+
+            logger.info("num : {}", num);
+
+        });
+
     }
 
 }

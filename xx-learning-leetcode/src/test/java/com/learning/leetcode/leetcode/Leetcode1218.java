@@ -1,7 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import org.testng.Assert;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,13 +24,13 @@ public class Leetcode1218 extends BaseTest implements Testing {
     @Override
     public void test() {
         int i1 = longestSubsequence(new int[]{1, 2, 3, 4, 5}, 1);
-        Assert.assertEquals(i1, 5);
+        Assertions.assertEquals(i1, 5);
 
         int i2 = longestSubsequence(new int[]{1, 3, 5, 7}, 1);
-        Assert.assertEquals(i2, 1);
+        Assertions.assertEquals(i2, 1);
 
         int i3 = longestSubsequence(new int[]{1, 5, 7, 8, 5, 3, 4, 2, 1}, -2);
-        Assert.assertEquals(i3, 4);
+        Assertions.assertEquals(i3, 4);
     }
 
     public int longestSubsequence(int[] arr, int difference) {

@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author lifang

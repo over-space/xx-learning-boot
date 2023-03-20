@@ -1,7 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import org.testng.Assert;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.Arrays;
 
@@ -33,11 +33,11 @@ public class Leetcode0208_trie extends BaseTest implements Testing {
         trie.insert("card");
         trie.insert("time");
 
-        Assert.assertTrue(trie.startsWith("ti"));
-        Assert.assertFalse(trie.startsWith("tm"));
-        Assert.assertTrue(trie.startsWith("wor"));
-        Assert.assertTrue(trie.search("word"));
-        Assert.assertFalse(trie.search("hel"));
+        Assertions.assertTrue(trie.startsWith("ti"));
+        Assertions.assertFalse(trie.startsWith("tm"));
+        Assertions.assertTrue(trie.startsWith("wor"));
+        Assertions.assertTrue(trie.search("word"));
+        Assertions.assertFalse(trie.search("hel"));
     }
 
     class Trie {

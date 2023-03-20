@@ -1,6 +1,6 @@
 package com.learning.leetcode.leetcode.zcy;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 import org.junit.jupiter.api.Test;
 
 /**

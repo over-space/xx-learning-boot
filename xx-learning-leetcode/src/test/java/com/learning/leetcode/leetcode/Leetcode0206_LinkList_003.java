@@ -1,8 +1,8 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import com.learning.leetcode.base.ListNode;
-import org.junit.Test;
+import com.learning.leetcode.leetcode.base.ListNode;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * 给定一个链表，旋转链表，将链表每个节点向右移动k个位置，其中k是非负数。

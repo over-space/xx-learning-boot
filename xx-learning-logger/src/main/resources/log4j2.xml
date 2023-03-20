@@ -2,7 +2,7 @@
 <Configuration status="warn" name="XInclude">
 
     <Properties>
-        <Property name="PATTERN" value="XX-LEARNING: %d{yyyy/MM/dd HH:mm:ss.SSS} %5p [%.10t]{20} %-40.40c{1.} :  %m%n"/>
+        <Property name="PATTERN" value="XX-LEARNING: %d{yyyy/MM/dd HH:mm:ss.SSS} %5p [%.8t] %-30.50c{1.} :  %m%n"/>
     </Properties>
 
     <Appenders>
@@ -23,10 +23,10 @@
         <!--    </Policies>-->
         <!--</RollingFile>-->
 
-        <Kafka name="kafka-logger" topic="topic-logger" enable="false">
-            <Property name="bootstrap.servers">localhost:9091</Property>
-            <PatternLayout pattern="${PATTERN}"/>
-        </Kafka>
+        <!-- <Kafka name="kafka-logger" topic="topic-logger" enable="false"> -->
+        <!--     <Property name="bootstrap.servers">localhost:9091</Property> -->
+        <!--     <PatternLayout pattern="${PATTERN}"/> -->
+        <!-- </Kafka> -->
 
     </Appenders>
 
@@ -47,8 +47,8 @@
             <!--<AppenderRef ref="File"/>-->
         </Root>
 
-        <Root level="info">
-            <AppenderRef ref="kafka-logger"/>
-        </Root>
+        <!-- <Root level="info"> -->
+            <!-- <AppenderRef ref="kafka-logger"/> -->
+        <!-- </Root> -->
     </Loggers>
 </Configuration>

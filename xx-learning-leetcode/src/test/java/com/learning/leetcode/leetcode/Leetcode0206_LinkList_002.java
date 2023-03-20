@@ -1,8 +1,8 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import com.learning.leetcode.base.ListNode;
-import org.junit.Test;
+import com.learning.leetcode.leetcode.base.ListNode;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * 实现一种算法，找出单向链表中倒数第 k 个节点。返回该节点的值。

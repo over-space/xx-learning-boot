@@ -1,19 +1,15 @@
 package com.learning.leetcode.leetcode;
 
 
-import com.learning.BaseTest;
-import com.learning.leetcode.base.ListNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.Test;
+import com.learning.leetcode.leetcode.base.ListNode;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author lifang
  * @since 2021/1/14
  */
 public class Leetcode0002 extends BaseTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(Leetcode0002.class);
 
 
     @Test

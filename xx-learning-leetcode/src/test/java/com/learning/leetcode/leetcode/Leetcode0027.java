@@ -1,7 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import org.junit.Test;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * 27. 移除元素

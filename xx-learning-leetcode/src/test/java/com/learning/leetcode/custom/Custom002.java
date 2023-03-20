@@ -1,6 +1,6 @@
 package com.learning.leetcode.custom;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;

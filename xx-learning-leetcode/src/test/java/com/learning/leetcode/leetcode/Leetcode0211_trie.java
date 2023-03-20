@@ -1,7 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import org.testng.Assert;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.Arrays;
 
@@ -32,8 +32,8 @@ public class Leetcode0211_trie extends BaseTest implements Testing {
         wd.addWord("test");
         wd.addWord("testing");
         wd.addWord("text");
-        Assert.assertTrue(wd.search("test"));
-        Assert.assertTrue(wd.search("test"));
+        Assertions.assertTrue(wd.search("test"));
+        Assertions.assertTrue(wd.search("test"));
     }
 
     class WordDictionary {

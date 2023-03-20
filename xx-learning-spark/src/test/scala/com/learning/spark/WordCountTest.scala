@@ -30,7 +30,7 @@ class WordCountTest extends ScalaBaseTest {
     def testDistinct {
         val context = getSparkContext("scala-test-01")
 
-        val listRDD:RDD[Tuple2[String, String]] = context.parallelize(List(new Tuple2("hello", "word"), new Tuple2("hello", "scala"), Tuple2("hello", "word")))
+        val listRDD: RDD[Tuple2[String, String]] = context.parallelize(List(new Tuple2("hello", "word"), new Tuple2("hello", "scala"), Tuple2("hello", "word")))
         listRDD.foreach(println)
 
         line()
@@ -279,5 +279,29 @@ class WordCountTest extends ScalaBaseTest {
         val result = groupRDD.mapValues(arr => arr.toList.sorted.take(2))
 
         console(result)
+    }
+
+    @Test
+    def testTemperatureTopN03(): Unit = {
+        var context: SparkContext = new SparkContext("local", "scala-temperature-02");
+        val fileRDD = context.textFile("src/test/resources/data/temperature.txt")
+
+        val dataRDD = fileRDD.map(line => line.split(" "))
+            .map(arr => {
+                val dateArray: Array[String] = arr(0).split("-")
+                // (year, month, day, temperature)
+                (dateArray(0).toInt, dateArray(1).toInt, dateArray(2).toInt, arr(1).toInt)
+            })
+
+        // 按年月温度排序
+        val sorted: RDD[(Int, Int, Int, Int)] = dataRDD.sortBy(t4 => (t4._1, t4._2, t4._4), false)
+
+        // 用reduceByKey去重
+        val reduced: RDD[((Int, Int, Int), Int)] = sorted.map(t4 => ((t4._1, t4._2, t4._3), t4._4))
+            .reduceByKey((x: Int, y: Int) => if (y > x) y else x)
+
+        val maped: RDD[((Int, Int), (Int, Int))] = reduced.map(t2 => ((t2._1._1, t2._1._2), (t2._1._3, t2._2)))
+        val grouped: RDD[((Int, Int), Iterable[(Int, Int)])] = maped.groupByKey()
+        console(grouped)
     }
 }

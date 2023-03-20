@@ -1,9 +1,8 @@
 package com.learning.leetcode.custom;
 
-import com.learning.BaseTest;
-import com.learning.leetcode.Testing;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.testng.annotations.Test;
+import com.learning.leetcode.leetcode.Testing;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
@@ -23,9 +22,6 @@ public class Exception extends BaseTest implements Testing {
             e.printStackTrace();
             System.out.println("-------------------------------------------------------------------------------");
             logger.info(e.getMessage(), e);
-            System.out.println("-------------------------------------------------------------------------------");
-            String stackTrace = ExceptionUtils.getStackTrace(e);
-            System.out.println(stackTrace);
             System.out.println("-------------------------------------------------------------------------------");
         }
     }

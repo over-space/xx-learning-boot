@@ -1,8 +1,8 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
-import com.learning.leetcode.base.ListNode;
-import org.junit.Test;
+import com.learning.leetcode.leetcode.base.ListNode;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * 82. 删除排序链表中的重复元素 II

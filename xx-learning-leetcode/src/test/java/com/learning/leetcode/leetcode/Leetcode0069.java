@@ -1,6 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.learning.BaseTest;
+import com.learning.logger.BaseTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author lifang
@@ -9,7 +10,7 @@ import com.learning.BaseTest;
 public class Leetcode0069 extends BaseTest implements Testing {
 
     @Override
-    @org.testng.annotations.Test
+    @Test
     public void test() {
         int[] nums = {98, 100, 99, 98, 90, 30, 20, 10, 5, 3, 1};
         //             0, 1, 2, 3, 4, 5, 6, 7, 8

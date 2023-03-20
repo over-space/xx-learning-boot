@@ -1,7 +1,7 @@
 package com.learning.leetcode.leetcode;
 
-import com.beust.jcommander.internal.Lists;
-import com.learning.BaseTest;
+import com.google.common.collect.Lists;
+import com.learning.logger.BaseTest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
