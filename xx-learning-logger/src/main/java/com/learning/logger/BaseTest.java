@@ -21,7 +21,7 @@ public abstract class BaseTest implements Serializable {
 
     protected static final Logger logger = LogManager.getLogger(BaseTest.class);
 
-    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 30,
+    public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 30,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(32),
             new ThreadFactory() {

@@ -123,7 +123,7 @@ class TemperatureTopNTest extends SparkBaseTest {
         val result = mapRDD.combineByKey(
             // 参数1,参数第一次进来
             (v1: (Int, Int)) => {
-                Array(v1, (0, 0), (0, 0));
+                Array(v1, (0, 0), (0, 0))
             },
             (oldValue: Array[(Int, Int)], newValue: (Int, Int)) => {
                 // 去重、排序
@@ -161,6 +161,42 @@ class TemperatureTopNTest extends SparkBaseTest {
 
         console(result.map(x => (x._1, x._2.toList)))
 
+        pause()
+    }
+
+    @Test
+    def testAvg01(): Unit = {
+
+        var context: SparkContext = new SparkContext("local", "scala-avg-01");
+
+        val dataRDD: RDD[(String, Int)] = context.parallelize(List(
+            ("zhangsan", 80),
+            ("zhangsan", 60),
+            ("zhangsan", 50),
+            ("zhangsan", 57),
+            ("lisi", 40),
+            ("lisi", 85),
+            ("wangwu", 90),
+            ("wangwu", 77),
+            ("jane", 66),
+            ("jane", 66)
+        ))
+
+        val combineRDD: RDD[(String, (Int, Int))] = dataRDD.combineByKey(
+            // 参数1,参数第一次进来
+            (v1: Int) => {
+                (v1, 1)
+            },
+            (oldValue: (Int, Int), newValue: (Int)) => {
+                (oldValue._1 + newValue, oldValue._2 + 1)
+            },
+            (v1: (Int, Int), v2: (Int, Int)) => {
+                (v1._1 + v2._1, v1._2 + v1._2)
+            }
+        )
+        console(combineRDD)
+        val value = combineRDD.mapValues(v => v._1 / v._2)
+        console(value)
         pause()
     }
 }

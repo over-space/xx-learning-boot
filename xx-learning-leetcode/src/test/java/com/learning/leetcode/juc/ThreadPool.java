@@ -3,6 +3,7 @@ package com.learning.leetcode.juc;
 import com.learning.logger.BaseTest;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +45,22 @@ public class ThreadPool extends BaseTest {
 
         });
 
+    }
+
+    @Test
+    void testCom(){
+
+        IntStream.rangeClosed(0, 1000).parallel().forEach(num -> {
+            CompletableFuture.runAsync(() -> {
+
+                logger.info("runAsync ==========================");
+                int i = 10 / 0;
+
+            }, threadPoolExecutor).exceptionally(e -> {
+                logger.info("exceptionally ==========================" + e.getMessage());
+                return null;
+            });
+        });
     }
 
 }
