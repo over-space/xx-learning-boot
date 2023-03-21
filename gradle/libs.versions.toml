@@ -6,7 +6,8 @@ junit-jupiter-version = "5.9.2"
 xx-learning-common = {module = "xx-learning-boot:xx-learning-common", version.ref = "project-version"}
 xx-learning-logger = {module = "xx-learning-boot:xx-learning-logger", version.ref = "project-version"}
 jdbc-database-h2 = {module = "com.h2database:h2", version = "2.1.214"}
-jdbc-database-mysql = {module = "com.mysql:mysql-connector-j", version = "8.0.32"}
+jdbc-database-mysql = {module = "mysql:mysql-connector-java", version = "8.0.11"}
+
 
 junit-jupiter-api = {module = "org.junit.jupiter:junit-jupiter-api", version.ref="junit-jupiter-version"}
 junit-jupiter-engine = {module = "org.junit.jupiter:junit-jupiter-engine", version.ref="junit-jupiter-version"}
