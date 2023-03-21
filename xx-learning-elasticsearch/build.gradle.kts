@@ -2,8 +2,10 @@ plugins {
     id("java")
 }
 
+
 dependencies {
-    testImplementation(project(mapOf("path" to ":xx-learning-logger")))
+    implementation(libs.bundles.logging.log4j)
+    testImplementation(libs.bundles.junit.jupiter)
 }
 
 tasks.getByName<Test>("test") {
