@@ -40,8 +40,6 @@ public final class UIHolder {
         String[] lines = StringUtils.split(text, "\n");
 
         StringBuilder stringBuilder = new StringBuilder(text.length());
-        stringBuilder.append("<h2>Redis为什么这么快?</h2>");
-        stringBuilder.append("<hr/>");
         questionUI.textContent.setText(stringBuilder.toString());
         questionUI.textContent.setCaretPosition(10);
 

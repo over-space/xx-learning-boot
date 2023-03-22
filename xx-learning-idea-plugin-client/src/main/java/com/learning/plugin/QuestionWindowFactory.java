@@ -46,7 +46,7 @@ public class QuestionWindowFactory implements ToolWindowFactory {
                 UIHolder.displayWelcomeContent();
             }).thenApply((result) -> {
                 try {
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.SECONDS.sleep(2);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

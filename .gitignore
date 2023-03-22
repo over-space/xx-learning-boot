@@ -44,4 +44,4 @@ project/target/
 
 ### CUSTOM ###
 !**/sharding-proxy-5.3.1/bin
-log
+logs/
