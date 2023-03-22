@@ -139,7 +139,7 @@ rules:
       actualDataNodes: ds_${0..1}.t_order_${0..1}
       tableStrategy:
         standard:
-          shardingColumn: id
+          shardingColumn: order_type
           shardingAlgorithmName: t_order_inline
       keyGenerateStrategy:
         column: id
@@ -161,7 +161,7 @@ rules:
     - t_order
   defaultDatabaseStrategy:
     standard:
-      shardingColumn: id
+      shardingColumn: order_type
       shardingAlgorithmName: database_inline
   defaultTableStrategy:
 #    none:
@@ -174,11 +174,11 @@ rules:
     database_inline:
       type: INLINE
       props:
-        algorithm-expression: ds_${id % 2}
+        algorithm-expression: ds_${order_type % 2}
     t_order_inline:
       type: INLINE
       props:
-        algorithm-expression: t_order_${id % 2}
+        algorithm-expression: t_order_${order_type % 2}
 #    t_order_item_inline:
 #      type: INLINE
 #      props:

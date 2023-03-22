@@ -41,3 +41,7 @@ project/target/
 
 ### VS Code ###
 .vscode/
+
+### CUSTOM ###
+!**/sharding-proxy-5.3.1/bin
+log
