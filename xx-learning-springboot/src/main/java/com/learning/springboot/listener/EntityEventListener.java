@@ -1,7 +1,7 @@
-package com.learning.plugin.repository.listener;
+package com.learning.springboot.listener;
 
-import com.learning.plugin.entity.BaseEntity;
-import com.learning.plugin.util.ObjectIdUtil;
+import com.learning.common.util.ObjectIdUtil;
+import com.learning.springboot.entity.BaseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.PostPersist;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @since 2023/3/13
  */
 @Component
-public class EntityEventListener{
+public class EntityEventListener {
 
     @PostPersist
     @PrePersist

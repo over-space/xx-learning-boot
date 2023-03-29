@@ -37,7 +37,7 @@ public class ShardingSphereTest extends BaseTest {
         for (int i = 1; i <= 100; i++) {
             OrderEntity orderEntity = new OrderEntity();
             orderEntity.setId(Long.valueOf(i));
-            orderEntity.setOrderType(i % 2);
+            orderEntity.setOrderType(i % 3);
             orderEntity.setAmount(new Random().nextFloat() * 1000F);
             orderService.insert(orderEntity, null);
 
@@ -55,8 +55,6 @@ public class ShardingSphereTest extends BaseTest {
         for (int i = 1; i <= 100; i++) {
             OrderLogEntity orderLogEntity = new OrderLogEntity();
             orderLogEntity.setOrderType(i);
-            // orderLogEntity.setCreatedDate(LocalDateTime.of(LocalDate.of(ThreadLocalRandom.current().nextInt(1949, 2030), ThreadLocalRandom.current().nextInt(1, 12), ThreadLocalRandom.current().nextInt(1, 28)), LocalTime.MIN));
-            orderLogEntity.setCreatedDate(LocalDateTime.of(LocalDate.of(2022, 9, 1), LocalTime.MIN));
             orderService.saveOrderLog(orderLogEntity);
         }
     }

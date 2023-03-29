@@ -1,11 +1,13 @@
 package com.learning.plugin.entity;
 
 
+import com.learning.springboot.entity.BaseEntity;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "t_question")
-public class QuestionEntity extends BaseEntity{
+public class QuestionEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private QuestionTypeEnum questionType;

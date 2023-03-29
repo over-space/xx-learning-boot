@@ -1,7 +1,8 @@
 package com.learning.sharding.entity;
 
+import com.learning.springboot.entity.BaseEntity;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,19 +11,13 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "t_order_item")
-public class OrderItemEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderItemEntity extends BaseEntity {
 
     private Long orderId;
 
     private Integer orderType;
 
     private String name;
-
-    private LocalDateTime createdDate;
 
     public Long getId() {
         return id;
@@ -56,11 +51,4 @@ public class OrderItemEntity implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
 }

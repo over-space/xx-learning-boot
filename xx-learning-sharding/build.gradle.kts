@@ -5,10 +5,12 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.bundles.jdbc.database)
     testImplementation(libs.bundles.junit.jupiter)
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
+    implementation(project(mapOf("path" to ":xx-learning-springboot")))
+
+    implementation(libs.bundles.jdbc.database)
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")

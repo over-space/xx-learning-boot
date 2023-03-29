@@ -1,7 +1,9 @@
 package com.learning.sharding.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import com.learning.springboot.entity.BaseEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
@@ -10,17 +12,11 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "t_order_log")
-public class OrderLogEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderLogEntity extends BaseEntity {
 
     private Integer orderType;
 
     private Long orderId;
-
-    private LocalDateTime createdDate;
 
     public Long getId() {
         return id;
@@ -44,13 +40,5 @@ public class OrderLogEntity implements Serializable {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
     }
 }

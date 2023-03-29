@@ -1,6 +1,6 @@
 package com.learning.plugin.repository;
 
-import com.learning.plugin.entity.BaseEntity;
+import com.learning.springboot.entity.BaseEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;

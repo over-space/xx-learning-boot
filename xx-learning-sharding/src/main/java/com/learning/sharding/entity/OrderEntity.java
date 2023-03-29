@@ -1,7 +1,8 @@
 package com.learning.sharding.entity;
 
+import com.learning.springboot.entity.BaseEntity;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @author over.li
@@ -9,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "t_order")
-public class OrderEntity implements Serializable {
+public class OrderEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

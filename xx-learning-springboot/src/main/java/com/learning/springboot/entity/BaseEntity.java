@@ -1,6 +1,7 @@
-package com.learning.plugin.entity;
+package com.learning.springboot.entity;
 
-import com.learning.plugin.repository.listener.EntityEventListener;
+
+import com.learning.springboot.listener.EntityEventListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
