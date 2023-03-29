@@ -5,6 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * @author over.li
  * @since 2022/10/14
@@ -14,6 +17,14 @@ public class HexTest extends BaseTest {
     private static final Logger logger = LogManager.getLogger(HexTest.class);
 
 
+    @Test
+    void testTime(){
+        long time = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        long t = 1679559978865L;
+        System.out.println(time);
+        System.out.println(t);
+        System.out.println((time - t) / 1000 / 60);
+    }
     @Test
     public void test() {
         String result1 = fun(7, 5);

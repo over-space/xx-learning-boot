@@ -20,7 +20,6 @@ import java.util.function.Supplier;
 public abstract class BaseTest implements Serializable {
 
     protected static final Logger logger = LogManager.getLogger(BaseTest.class);
-
     public static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 30,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(32),
