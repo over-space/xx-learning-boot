@@ -6,12 +6,9 @@ object ObjectScalaTest {
 
   println("scala object....1")
 
-  val classScalaTest: ClassScalaTest = new ClassScalaTest("abc")
-
   def main(args: Array[String]): Unit = {
     println("hello world!")
 
-    classScalaTest.map()
 
     for (i <- 1 to 10) {
       println(i);

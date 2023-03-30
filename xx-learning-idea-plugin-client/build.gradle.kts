@@ -15,10 +15,11 @@ intellij {
 
 dependencies {
     implementation("com.atlassian.commonmark:commonmark-ext-gfm-tables:0.17.0")
-    implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
-    implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
+
+    implementation(libs.bundles.alibaba.commons)
+    implementation(libs.bundles.apache.commons)
+
     implementation("org.slf4j:slf4j-api:2.0.6")
-    implementation("commons-io:commons-io:2.11.0")
 }
 
 tasks {

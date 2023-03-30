@@ -25,6 +25,9 @@ google-zxing-javase = {module = "com.google.zxing:javase", version.ref = "google
 apache-commons-codes = {module = "commons-codec:commons-codec", version = "1.15"}
 apache-commons-io = {module = "commons-io:commons-io", version = "2.11.0"}
 apache-commons-lang3 = {module = "org.apache.commons:commons-lang3", version = "3.12.0"}
+apache-commons-httpclient5 = {module = "org.apache.httpcomponents.client5:httpclient5", version = "5.2.1"}
+
+alibaba-fastjson2 = {module = "com.alibaba.fastjson2:fastjson2", version = "2.0.24"}
 
 [bundles]
 jdbc-database = ["jdbc-database-h2", "jdbc-database-mysql"]
@@ -32,7 +35,8 @@ junit-jupiter = ["junit-jupiter-api", "junit-jupiter-engine"]
 scala = ["scala-lang", "typesafe-akka"]
 logging-log4j = ["logging-log4j-core", "logging-log4j-api"]
 google-zxing = ["google-zxing-core", "google-zxing-javase"]
-apache-commons = ["apache-commons-codes", "apache-commons-io", "apache-commons-lang3"]
+apache-commons = ["apache-commons-codes", "apache-commons-io", "apache-commons-lang3", "apache-commons-httpclient5"]
+alibaba-commons = ["alibaba-fastjson2"]
 
 [plugins]
 springboot = { id = "org.springframework.boot", version = "2.7.9" }

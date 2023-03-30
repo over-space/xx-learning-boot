@@ -8,7 +8,7 @@ dependencies {
 
     implementation(libs.bundles.google.zxing)
     implementation(libs.bundles.apache.commons)
-    implementation("com.alibaba:fastjson:2.0.26")
+    implementation(libs.bundles.alibaba.commons)
 }
 
 tasks.getByName<Test>("test") {
