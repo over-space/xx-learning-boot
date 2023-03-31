@@ -1,5 +1,6 @@
 package com.learning.scala
 
+import com.learning.scala.logger.ScalaBaseTest
 import org.junit.jupiter.api.Test
 
 import scala.collection.mutable
@@ -57,5 +58,19 @@ class ScalaForTest extends ScalaBaseTest {
 
         val array = result.headOption.getOrElse(Array(0))
         array.foreach(println)
+    }
+
+    @Test
+    def testFor04():Unit = {
+
+       var list =  for{
+            i <- 0 to 10
+            j <- 5 to 15
+            if( i != j)
+            if( i > 5)
+            if( j > 10)
+        } yield Array(i, j)
+
+        list.foreach(x => logger.info("i={}, j={}", x(0), x(1)))
     }
 }

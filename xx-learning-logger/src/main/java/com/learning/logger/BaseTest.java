@@ -70,7 +70,7 @@ public abstract class BaseTest implements Serializable {
     }
 
     protected void print(String msg) {
-        logger.info("input : {}", msg);
+        logger.info("{}", msg);
     }
 
     protected static void sleep(int seconds) {
@@ -78,6 +78,14 @@ public abstract class BaseTest implements Serializable {
             TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
             logger.error(e.getMessage(), e);
+        }
+    }
+
+
+    protected static void pause(){
+        while (true){
+            sleep(1);
+            logger.info("pause...");
         }
     }
 
