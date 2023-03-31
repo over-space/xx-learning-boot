@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public final class QRCodeUtil {
 
-    protected static final Logger logger = LogManager.getLogger(QRCodeUtil.class);
+    private static final Logger logger = LogManager.getLogger(QRCodeUtil.class);
 
     private QRCodeUtil() {
     }
@@ -37,6 +37,7 @@ public final class QRCodeUtil {
 
     public static byte[] generateQRCode(String content, int height, int width, int margin, ErrorCorrectionLevel level) throws IOException, WriterException {
         String format = "gif";// 图像类型
+
         Map<EncodeHintType, Object> hints = new HashMap<>();
         // 内容编码格式
         hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
