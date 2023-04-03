@@ -21,5 +21,4 @@ class ScalaBaseTest extends BaseTest {
         })
         logger.info("")
     }
-
 }
