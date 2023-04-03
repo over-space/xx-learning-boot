@@ -1,6 +1,6 @@
 package com.learning.spark
 
-import com.learning.scala.ScalaBaseTest
+import com.learning.scala.logger.ScalaBaseTest
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 

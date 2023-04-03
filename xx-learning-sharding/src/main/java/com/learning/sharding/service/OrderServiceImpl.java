@@ -9,12 +9,15 @@ import com.learning.sharding.repository.OrderItemRepository;
 import com.learning.sharding.repository.OrderLogRepository;
 import com.learning.sharding.repository.OrderRepository;
 import com.learning.sharding.repository.OrderTypeRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Configuration
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -26,6 +29,13 @@ public class OrderServiceImpl implements OrderService {
     private OrderLogRepository orderLogRepository;
     @Resource
     private OrderTypeRepository orderTypeRepository;
+
+    @Value("${test.shop-id}")
+    private List<Integer> shopIds;
+
+    public OrderServiceImpl() {
+        System.out.println("=================" + shopIds);
+    }
 
     @Override
     @Transactional

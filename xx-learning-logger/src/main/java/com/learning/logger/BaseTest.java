@@ -65,7 +65,7 @@ public abstract class BaseTest implements Serializable {
         }, threadPoolExecutor);
     }
 
-    protected static void line() {
+    public static void line() {
         logger.info("************************************************************************************************");
     }
 

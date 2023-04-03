@@ -16,7 +16,6 @@ class WordCountTest extends SparkBaseTest {
 
     @Test
     def testLogger(): Unit = {
-        line()
     }
 
     @Test
@@ -26,7 +25,6 @@ class WordCountTest extends SparkBaseTest {
         val listRDD: RDD[Tuple2[String, String]] = context.parallelize(List(new Tuple2("hello", "word"), new Tuple2("hello", "scala"), Tuple2("hello", "word")))
         listRDD.foreach(println)
 
-        line()
         val distinctRDD = listRDD.distinct()
         distinctRDD.foreach(println)
     }
@@ -154,7 +152,6 @@ class WordCountTest extends SparkBaseTest {
 
         val groupRDD = dataRDD.groupByKey()
         groupRDD.foreach(println)
-        line()
 
         val result: RDD[(String, Int)] = groupRDD.flatMap(k => k._2.map(v => (k._1, v)).iterator)
         result.foreach(println)

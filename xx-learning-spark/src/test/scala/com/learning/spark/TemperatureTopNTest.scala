@@ -1,5 +1,6 @@
 package com.learning.spark
 
+import com.learning.logger.BaseTest.pause
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 import org.junit.jupiter.api.Test
