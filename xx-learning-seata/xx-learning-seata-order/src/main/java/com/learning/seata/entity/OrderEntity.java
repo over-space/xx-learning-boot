@@ -13,20 +13,21 @@ import java.time.LocalDateTime;
 @Table(name = "t_order")
 @Entity
 public class OrderEntity extends BaseEntity {
-    private String orderName;
+
+    private Long goodsBusinessId;
 
     private Integer shopCount;
 
-    private String remark;
+    private String description;
 
     private LocalDateTime payTime;
 
-    public String getOrderName() {
-        return orderName;
+    public Long getGoodsBusinessId() {
+        return goodsBusinessId;
     }
 
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
+    public void setGoodsBusinessId(Long goodsBusinessId) {
+        this.goodsBusinessId = goodsBusinessId;
     }
 
     public Integer getShopCount() {
@@ -37,12 +38,12 @@ public class OrderEntity extends BaseEntity {
         this.shopCount = shopCount;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getDescription() {
+        return description;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public LocalDateTime getPayTime() {

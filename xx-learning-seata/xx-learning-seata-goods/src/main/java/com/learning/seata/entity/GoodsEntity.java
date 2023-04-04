@@ -10,9 +10,9 @@ import javax.persistence.Table;
  * @author over.li
  * @since 2023/4/4
  */
-@Table(name = "t_stock")
+@Table(name = "t_goods")
 @Entity
-public class StockEntity extends BaseEntity {
+public class GoodsEntity extends BaseEntity {
 
     /**
      * 商品名称

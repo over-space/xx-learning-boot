@@ -23,8 +23,8 @@ include("xx-learning-springboot")
 include("xx-learning-seata")
 include("xx-learning-seata:xx-learning-seata-order")
 findProject(":xx-learning-seata:xx-learning-seata-order")?.name = "xx-learning-seata-order"
-include("xx-learning-seata:xx-learning-seata-stock")
-findProject(":xx-learning-seata:xx-learning-seata-stock")?.name = "xx-learning-seata-stock"
+include("xx-learning-seata:xx-learning-seata-goods")
+findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-seata-goods"
 include("xx-learning-seata:xx-learning-seata-pay")
 findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
 include("xx-learning-seata:xx-learning-seata-api")

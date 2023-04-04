@@ -4,7 +4,7 @@ package com.learning.seata.service;
  * @author over.li
  * @since 2023/4/4
  */
-public interface StockService {
+public interface GoodsService {
 
     /**
      * 减库存

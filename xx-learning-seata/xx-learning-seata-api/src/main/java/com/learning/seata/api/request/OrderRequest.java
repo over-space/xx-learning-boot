@@ -8,16 +8,18 @@ import java.io.Serializable;
  */
 public class OrderRequest implements Serializable {
 
-    private Long businessId;
+    private Long goodsBusinessId;
 
     private Integer shopCount;
 
-    public Long getBusinessId() {
-        return businessId;
+    private String description;
+
+    public Long getGoodsBusinessId() {
+        return goodsBusinessId;
     }
 
-    public void setBusinessId(Long businessId) {
-        this.businessId = businessId;
+    public void setGoodsBusinessId(Long goodsBusinessId) {
+        this.goodsBusinessId = goodsBusinessId;
     }
 
     public Integer getShopCount() {
@@ -26,5 +28,13 @@ public class OrderRequest implements Serializable {
 
     public void setShopCount(Integer shopCount) {
         this.shopCount = shopCount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
