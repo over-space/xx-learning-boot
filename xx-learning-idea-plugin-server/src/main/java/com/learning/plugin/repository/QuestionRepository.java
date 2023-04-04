@@ -1,6 +1,7 @@
 package com.learning.plugin.repository;
 
 import com.learning.plugin.entity.QuestionEntity;
+import com.learning.springboot.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface QuestionRepository extends BaseRepository<QuestionEntity> {

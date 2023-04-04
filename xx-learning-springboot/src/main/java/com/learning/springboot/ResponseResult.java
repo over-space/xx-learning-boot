@@ -1,4 +1,4 @@
-package com.learning.plugin.controller.response;
+package com.learning.springboot;
 
 import java.io.Serializable;
 

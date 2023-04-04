@@ -1,4 +1,4 @@
-package com.learning.plugin.repository;
+package com.learning.springboot.repository;
 
 import com.learning.springboot.entity.BaseEntity;
 import org.springframework.beans.BeanUtils;

@@ -2,10 +2,10 @@ package com.learning.plugin.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.learning.plugin.controller.request.QuestionRequest;
-import com.learning.plugin.controller.response.ResponseResult;
 import com.learning.plugin.entity.QuestionEntity;
 import com.learning.plugin.entity.QuestionTypeEnum;
 import com.learning.plugin.service.QuestionService;
+import com.learning.springboot.ResponseResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
