@@ -3,6 +3,7 @@ package com.learning.spark
 import com.learning.scala.logger.ScalaBaseTest
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
+import org.apache.spark.sql.SparkSession
 
 /**
  * @author over.li
@@ -22,5 +23,20 @@ class SparkBaseTest extends ScalaBaseTest {
         var content: SparkContext = new SparkContext("local", appName);
         content.setLogLevel("ERROR")
         content
+    }
+
+    def getSparkSession(appName: String, enableHiveSupport: Boolean): SparkSession = {
+        if (enableHiveSupport) {
+            SparkSession.builder()
+                .master("local")
+                .appName(appName)
+                .enableHiveSupport()
+                .getOrCreate()
+        } else {
+            SparkSession.builder()
+                .master("local")
+                .appName(appName)
+                .getOrCreate()
+        }
     }
 }
