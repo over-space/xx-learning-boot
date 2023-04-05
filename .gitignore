@@ -45,3 +45,19 @@ project/target/
 ### CUSTOM ###
 !**/sharding-proxy-5.3.1/bin
 logs/
+!**/nacos-2.2.1/bin/
+!**/nacos-2.2.1/target/
+
+# Except this file !.gitignore
+target
+.vscode
+.DS_Store
+/logs
+*.log
+node_modules
+test/derby.log
+derby.log
+work
+test/logs
+yarn.lock
+.flattened-pom.xml
