@@ -4,6 +4,8 @@ plugins {
     id("io.spring.dependency-management")
 }
 
+extra["springCloudVersion"] = "2021.0.6"
+
 dependencies {
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
@@ -20,6 +22,11 @@ dependencies {
     implementation("io.seata:seata-all:1.6.1")
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
