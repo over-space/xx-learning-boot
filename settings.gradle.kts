@@ -1,6 +1,3 @@
-// enableFeaturePreview("VERSION_CATALOGS")
-// enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-
 rootProject.name = "xx-learning-boot"
 
 include("xx-learning-idea-plugin-client")
