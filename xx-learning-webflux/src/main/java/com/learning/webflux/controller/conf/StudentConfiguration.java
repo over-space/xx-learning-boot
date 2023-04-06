@@ -26,9 +26,6 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  */
 @Configuration
 public class StudentConfiguration {
-
-    BigDecimal
-
     protected static final Logger logger = LogManager.getLogger(StudentConfiguration.class);
 
     @Bean
