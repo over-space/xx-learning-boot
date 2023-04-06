@@ -14,6 +14,8 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -24,6 +26,9 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
  */
 @Configuration
 public class StudentConfiguration {
+
+    BigDecimal
+
     protected static final Logger logger = LogManager.getLogger(StudentConfiguration.class);
 
     @Bean

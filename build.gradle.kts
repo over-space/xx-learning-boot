@@ -53,7 +53,3 @@ subprojects {
         implementation("org.apache.logging.log4j:log4j-api:2.20.0")
     }
 }
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
