@@ -27,15 +27,13 @@ public class StudentConfiguration {
     protected static final Logger logger = LogManager.getLogger(StudentConfiguration.class);
 
     @Bean
-    public RouterFunction<ServerResponse> router(StudentHandler handler){
-            return route(GET("/student/{studentId}").and(accept(APPLICATION_JSON)), handler::getStudent);
-                 // .andRoute(GET("/{user}/customers").and(accept(APPLICATION_JSON)), handler::getUserCustomers)
-                 // .andRoute(DELETE("/{user}").and(accept(APPLICATION_JSON)), handler::deleteUser);
+    public RouterFunction<ServerResponse> router(StudentHandler handler) {
+        return route(GET("/student/{studentId}").and(accept(APPLICATION_JSON)), handler::getStudent);
     }
 
 
     @Component
-    public static class StudentHandler{
+    public static class StudentHandler {
 
         public Mono<ServerResponse> getStudent(ServerRequest request) {
             Long studentId = Long.valueOf(request.pathVariable("studentId"));
