@@ -1,8 +1,3 @@
-plugins {
-    id("java")
-    id("scala")
-}
-
 dependencies {
     testImplementation(libs.bundles.junit.jupiter)
     testImplementation(libs.bundles.apache.commons)
@@ -12,10 +7,6 @@ dependencies {
     implementation(project(mapOf("path" to ":xx-learning-common")))
     implementation(project(mapOf("path" to ":xx-learning-scala")))
     implementation("com.google.guava:guava:31.1-jre")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
 }
 
 tasks.withType<Jar>() {

@@ -1,9 +1,3 @@
-plugins {
-    id("java")
-    id("scala")
-    id("application")
-}
-
 dependencies {
     implementation(libs.bundles.jdbc.database)
     implementation(libs.bundles.logging.log4j)
@@ -15,11 +9,6 @@ dependencies {
 
     implementation("org.apache.spark:spark-core_2.12:2.4.8")
     implementation("org.apache.spark:spark-sql_2.12:2.4.8")
-}
-
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
 }
 
 tasks.withType<Jar>() {
@@ -35,3 +24,10 @@ tasks.withType<Jar>() {
     }
 }
 
+tasks.bootJar{
+    enabled = true
+}
+
+tasks.jar{
+    enabled = false
+}

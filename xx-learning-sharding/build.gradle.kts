@@ -1,9 +1,3 @@
-plugins {
-    java
-    id("org.springframework.boot")
-    id("io.spring.dependency-management")
-}
-
 dependencies {
     testImplementation(libs.bundles.junit.jupiter)
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
@@ -17,9 +11,4 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.apache.shardingsphere:shardingsphere-jdbc-core:5.3.1")
-}
-
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }

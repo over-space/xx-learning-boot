@@ -3,8 +3,6 @@ package com.learning.common.util;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.zxing.WriterException;
 import com.learning.logger.BaseTest;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -26,7 +24,7 @@ public class QRCodeUtilTest extends BaseTest {
 
         for (int i = 0; i <= 10; i++) {
             byte[] bytes = QRCodeUtil.generateQRCode(qrData.toString(), i);
-            FileUtil.writeByteArrayToFile(String.format("/Users/flipos/Desktop/%d.jpg", i), bytes);
+            FileUtil.writeByteArrayToFile(String.format("/Users/flipos/Desktop/logs/%d.jpg", i), bytes);
         }
     }
 

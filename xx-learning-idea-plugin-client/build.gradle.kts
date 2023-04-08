@@ -1,8 +1,6 @@
 plugins {
-    id("java")
-    id("org.jetbrains.intellij") version "1.13.2"
+    id("org.jetbrains.intellij") version "1.13.2" apply true
 }
-
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html

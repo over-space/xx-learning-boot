@@ -1,7 +1,6 @@
 package com.learning.scala.leetcode
 
-import com.learning.logger.BaseTest
-import com.learning.scala.ScalaBaseTest
+import com.learning.scala.logger.ScalaBaseTest
 import org.junit.jupiter.api.Test
 
 import scala.collection.mutable
