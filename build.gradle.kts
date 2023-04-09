@@ -183,10 +183,10 @@ subprojects {
         plugin("org.jetbrains.kotlin.plugin.spring")
     }
 
-    dependencies {
-        implementation("org.scala-lang:scala-library:2.12.0")
-        implementation("com.typesafe.akka:akka-actor_2.12:2.4.20")
-    }
+    // dependencies {
+    //     implementation("org.scala-lang:scala-library:2.12.0")
+    //     implementation("com.typesafe.akka:akka-actor_2.12:2.4.20")
+    // }
 
     dependencyManagement {
         imports {
@@ -199,12 +199,20 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
     }
+
+    tasks.bootJar{
+        enabled = false
+    }
+
+    tasks.jar{
+        enabled = false
+    }
 }
 
-tasks.bootJar{
-    enabled = false
-}
-
-tasks.jar{
-    enabled = false
-}
+// tasks.bootJar{
+//     enabled = false
+// }
+//
+// tasks.jar{
+//     enabled = false
+// }

@@ -1,7 +1,11 @@
+plugins{
+    scala
+}
+
 dependencies {
-    implementation(libs.bundles.logging.log4j)
-    implementation(libs.bundles.junit.jupiter)
-    implementation(libs.bundles.scala)
+    api(libs.bundles.logging.log4j)
+    api(libs.bundles.junit.jupiter)
+    api(libs.bundles.scala)
 }
 
 tasks.bootJar{

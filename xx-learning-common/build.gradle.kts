@@ -1,10 +1,8 @@
 dependencies {
-    testImplementation(libs.bundles.junit.jupiter)
     implementation(libs.bundles.google.zxing)
-    implementation(libs.bundles.apache.commons)
-    implementation(libs.bundles.alibaba.commons)
-    implementation(libs.bundles.logging.log4j)
-    testImplementation(project(mapOf("path" to ":xx-learning-logger")))
+    api(libs.bundles.apache.commons)
+    api(libs.bundles.alibaba.commons)
+    api(project(mapOf("path" to ":xx-learning-logger")))
 }
 
 tasks.bootJar{
