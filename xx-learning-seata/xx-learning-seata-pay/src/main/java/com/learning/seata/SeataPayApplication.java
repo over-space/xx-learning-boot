@@ -18,7 +18,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
 @EnableJpaRepositories
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.learning.seata", "com.learning.springboot"})
 public class SeataPayApplication {
 
     public static void main(String[] args) {

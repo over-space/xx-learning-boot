@@ -18,10 +18,10 @@ public class HeartbeatController {
 
     private final LocalDateTime startupDateTime;
 
-    @Value("spring.application.name")
+    @Value("${spring.application.name}")
     private String applicationName;
 
-    @Value("server.port")
+    @Value("${server.port}")
     private Integer port;
 
     public HeartbeatController(){
