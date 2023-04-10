@@ -1,12 +1,15 @@
 package com.learning.springboot;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class ResponseResult<T> implements Serializable {
 
     private int errorCode;
 
     private String message;
+
+    private LocalDateTime currentTime = LocalDateTime.now();
 
     private T data;
 
@@ -57,6 +60,10 @@ public class ResponseResult<T> implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public LocalDateTime getCurrentTime() {
+        return currentTime;
     }
 
     public T getData() {
