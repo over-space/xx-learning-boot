@@ -28,13 +28,14 @@ include("xx-learning-leetcode")
 // 秒杀系统学习模块
 include("xx-learning-seckill")
 
+// seata学习模块
+include("xx-learning-seata")
+include("xx-learning-seata:xx-learning-seata-common")
+findProject(":xx-learning-seata:xx-learning-seata-common")?.name = "xx-learning-seata-common"
+include("xx-learning-seata:xx-learning-seata-order")
+findProject(":xx-learning-seata:xx-learning-seata-order")?.name = "xx-learning-seata-order"
+include("xx-learning-seata:xx-learning-seata-goods")
+findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-seata-goods"
+include("xx-learning-seata:xx-learning-seata-pay")
+findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
 
-// include("xx-learning-seata")
-// include("xx-learning-seata:xx-learning-seata-order")
-// findProject(":xx-learning-seata:xx-learning-seata-order")?.name = "xx-learning-seata-order"
-// include("xx-learning-seata:xx-learning-seata-goods")
-// findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-seata-goods"
-// include("xx-learning-seata:xx-learning-seata-pay")
-// findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
-// include("xx-learning-seata:xx-learning-seata-api")
-// findProject(":xx-learning-seata:xx-learning-seata-api")?.name = "xx-learning-seata-api"

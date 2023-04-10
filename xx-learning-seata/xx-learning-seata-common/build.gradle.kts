@@ -1,5 +1,5 @@
 dependencies {
-    api(project(mapOf("path" to ":xx-learning-springboot")))
+    api(project(":xx-learning-springboot"))
 
     api("org.springframework.cloud:spring-cloud-starter-openfeign")
     api("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery")
