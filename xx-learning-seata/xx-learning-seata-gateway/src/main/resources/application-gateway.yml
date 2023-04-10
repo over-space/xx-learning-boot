@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: xx-learning-seata-pay
+          uri: lb://xx-learning-seata-pay
+          predicates:
+            - Path=/pay
+
+        - id: xx-learning-seata-order
+          uri: lb://xx-learning-seata-order
+          predicates:
+            - Path=/order
+
+        - id: xx-learning-seata-goods
+          uri: lb://xx-learning-seata-goods
+          predicates:
+            - Path=/goods
