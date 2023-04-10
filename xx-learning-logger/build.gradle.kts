@@ -1,7 +1,3 @@
-plugins{
-    scala
-}
-
 dependencies {
     api(libs.bundles.logging.log4j)
     api(libs.bundles.junit.jupiter)
@@ -13,5 +9,5 @@ tasks.bootJar{
 }
 
 tasks.jar{
-    enabled = false
+    enabled = true
 }

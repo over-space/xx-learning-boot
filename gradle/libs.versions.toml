@@ -13,7 +13,7 @@ jdbc-database-mysql = {module = "com.mysql:mysql-connector-j", version = "8.0.32
 junit-jupiter-api = {module = "org.junit.jupiter:junit-jupiter-api", version.ref="junit-jupiter-version"}
 junit-jupiter-engine = {module = "org.junit.jupiter:junit-jupiter-engine", version.ref="junit-jupiter-version"}
 
-scala-lang = {module = "org.scala-lang:scala-library", version = "2.12.0"}
+scala-lang = {module = "org.scala-lang:scala-library", version = "2.12.13"}
 typesafe-akka = {module = "com.typesafe.akka:akka-actor_2.12", version = "2.4.20"}
 
 logging-log4j-core = {module = "org.apache.logging.log4j:log4j-core", version.ref = "logging-log4j-version"}

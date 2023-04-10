@@ -2,7 +2,7 @@ dependencies {
     implementation(libs.bundles.google.zxing)
     api(libs.bundles.apache.commons)
     api(libs.bundles.alibaba.commons)
-    api(project(mapOf("path" to ":xx-learning-logger")))
+    implementation(project(mapOf("path" to ":xx-learning-logger")))
 }
 
 tasks.bootJar{
