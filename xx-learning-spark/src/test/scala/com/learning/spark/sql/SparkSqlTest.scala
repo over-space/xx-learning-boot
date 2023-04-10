@@ -39,6 +39,11 @@ class SparkSqlTest extends SparkBaseTest{
         val nameFrame = session.sql("select name from t_person order by age desc")
         nameFrame.show()
         nameFrame.printSchema()
+
+        // while (true){
+        //     val sql = StdIn.readLine("input spark sql:")
+        //     session.sql(sql).show()
+        // }
     }
 
 }
