@@ -62,8 +62,7 @@ subprojects {
     }
 
     tasks.withType<Test> {
-        // gradle build 跳过测试类
-        // useJUnitPlatform()
+        useJUnitPlatform()
     }
 
     tasks.bootJar{
