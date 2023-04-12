@@ -1,6 +1,6 @@
-package com.learning.seata.schedule;
+package com.learning.seata.gateway.schedule;
 
-import com.learning.seata.gateway.RouteRefreshEventPublisher;
+import com.learning.seata.gateway.route.RouteRefreshEventPublisher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;

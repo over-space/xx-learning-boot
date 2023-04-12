@@ -1,9 +1,8 @@
-package com.learning.seata.gateway;
+package com.learning.seata.gateway.route;
 
+import com.learning.seata.gateway.rate.limiter.DefaultGatewayRateLimiter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.cloud.gateway.filter.GatewayFilter;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.StripPrefixGatewayFilterFactory;
 import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;
 import org.springframework.cloud.gateway.route.Route;
@@ -11,7 +10,6 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
@@ -20,7 +18,6 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -142,10 +139,15 @@ public class CustomRouteLocator implements RouteLocator {
                 // 通过地址路由
                 booleanSpec = booleanSpec.and().path("/welcome/**");
 
+
                 booleanSpec.filters(gatewayFilterSpec -> {
+
                     StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory = new StripPrefixGatewayFilterFactory();
                     StripPrefixGatewayFilterFactory.Config stripConfig = stripPrefixGatewayFilterFactory.newConfig();
                     stripConfig.setParts(1);
+
+                    gatewayFilterSpec = gatewayFilterSpec.requestRateLimiter().rateLimiter(DefaultGatewayRateLimiter.class, c -> {}).and();
+
                     return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
                 });
 
@@ -156,21 +158,5 @@ public class CustomRouteLocator implements RouteLocator {
         Flux<Route> routes = builder.build().getRoutes();
         logger.info("end CustomRouteLocator#getRoutes");
         return routes;
-    }
-
-    private Mono<Void> stop(ServerWebExchange webExchange, HttpStatus status, String message) {
-        var response = webExchange.getResponse();
-        response.setStatusCode(status);
-        if (message != null) {
-            response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-            try {
-                var buffer = response.bufferFactory().wrap(message.getBytes(StandardCharsets.UTF_8));
-                return response.writeWith(Flux.just(buffer));
-            } catch (Exception e) {
-                return response.setComplete();
-            }
-        } else {
-            return response.setComplete();
-        }
     }
 }

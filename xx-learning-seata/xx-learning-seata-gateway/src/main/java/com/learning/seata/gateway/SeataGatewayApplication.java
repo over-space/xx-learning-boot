@@ -1,4 +1,4 @@
-package com.learning.seata;
+package com.learning.seata.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
