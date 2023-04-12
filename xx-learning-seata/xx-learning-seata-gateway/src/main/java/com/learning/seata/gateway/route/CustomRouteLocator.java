@@ -10,13 +10,13 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -139,14 +139,11 @@ public class CustomRouteLocator implements RouteLocator {
                 // 通过地址路由
                 booleanSpec = booleanSpec.and().path("/welcome/**");
 
-
                 booleanSpec.filters(gatewayFilterSpec -> {
 
                     StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory = new StripPrefixGatewayFilterFactory();
                     StripPrefixGatewayFilterFactory.Config stripConfig = stripPrefixGatewayFilterFactory.newConfig();
                     stripConfig.setParts(1);
-
-                    gatewayFilterSpec = gatewayFilterSpec.requestRateLimiter().rateLimiter(DefaultGatewayRateLimiter.class, c -> {}).and();
 
                     return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
                 });
@@ -154,6 +151,29 @@ public class CustomRouteLocator implements RouteLocator {
                 return booleanSpec.uri("lb://xx-learning-seata-pay");
             });
         }
+
+        builder.route("gateway-test-04", predicateSpec -> {
+
+            BooleanSpec booleanSpec = predicateSpec.predicate(predicate -> true);
+
+            // 通过地址路由
+            booleanSpec = booleanSpec.and().path("/test/**");
+
+            booleanSpec.filters(gatewayFilterSpec -> {
+
+                StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory = new StripPrefixGatewayFilterFactory();
+                StripPrefixGatewayFilterFactory.Config stripConfig = stripPrefixGatewayFilterFactory.newConfig();
+                stripConfig.setParts(1);
+
+                gatewayFilterSpec = gatewayFilterSpec.requestRateLimiter()
+                        .rateLimiter(DefaultGatewayRateLimiter.class, c -> {})
+                        .and();
+
+                return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
+            });
+
+            return booleanSpec.uri("lb://xx-learning-seata-pay");
+        });
 
         Flux<Route> routes = builder.build().getRoutes();
         logger.info("end CustomRouteLocator#getRoutes");

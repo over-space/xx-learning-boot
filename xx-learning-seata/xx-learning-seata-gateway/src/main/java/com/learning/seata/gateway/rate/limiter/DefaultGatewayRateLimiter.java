@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 /**
  * @author over.li
  * @since 2023/4/11
@@ -38,8 +40,10 @@ public class DefaultGatewayRateLimiter extends AbstractRateLimiter<DefaultGatewa
 
         Config config = getConfig().get(routeId);
 
+        final int permits = Optional.ofNullable(config).map(Config::getRequestedTokens).orElse(1);
+
         return Mono.fromSupplier(() -> {
-            boolean acquire = rateLimiter.tryAcquire(config.requestedTokens);
+            boolean acquire = rateLimiter.tryAcquire(permits);
             if (acquire) {
                 return new Response(true, Maps.newHashMap());
             } else {

@@ -1,23 +1,26 @@
 package com.learning.springboot;
 
+import com.alibaba.fastjson2.JSON;
+
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 public class ResponseResult<T> implements Serializable {
 
-    private int errorCode;
+    private int code;
 
     private String message;
 
-    private LocalDateTime currentTime = LocalDateTime.now();
+    private LocalDateTime timestamp = LocalDateTime.now();
 
     private T data;
 
     public ResponseResult() {
     }
 
-    public ResponseResult(int errorCode, String message) {
-        this.errorCode = errorCode;
+    public ResponseResult(int code, String message) {
+        this.code = code;
         this.message = message;
     }
 
@@ -26,32 +29,36 @@ public class ResponseResult<T> implements Serializable {
         this.data = data;
     }
 
-    public static ResponseResult success(){
-        return new ResponseResult(0, "OK");
+    public static ResponseResult<Void>  success(){
+        return new ResponseResult<Void>(0, "OK");
     }
 
-    public static <T> ResponseResult success(T data){
-        return new ResponseResult(0, "OK", data);
+    public static <T> ResponseResult<T> success(T data){
+        return new ResponseResult<T>(0, "OK", data);
     }
 
-    public static <T> ResponseResult success(String message, T data){
-        return new ResponseResult(0, message, data);
+    public static <T> ResponseResult<T> success(String message, T data){
+        return new ResponseResult<T>(0, message, data);
     }
 
-    public static <T> ResponseResult fail(int errorCode, String message){
-        return new ResponseResult(errorCode, message, null);
+    public static <T> ResponseResult<Void> fail(int errorCode, String message){
+        return new ResponseResult<Void>(errorCode, message, null);
     }
 
-    public static <T> ResponseResult fail(int errorCode, String message, T data){
-        return new ResponseResult(errorCode, message, data);
+    public static <T> ResponseResult<T> fail(int errorCode, String message, T data){
+        return new ResponseResult<T>(errorCode, message, data);
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public String toJSONString(){
+        return JSON.toJSONString(this);
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -62,8 +69,8 @@ public class ResponseResult<T> implements Serializable {
         this.message = message;
     }
 
-    public LocalDateTime getCurrentTime() {
-        return currentTime;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public T getData() {
