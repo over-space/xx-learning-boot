@@ -23,7 +23,7 @@ tasks.withType<Jar>() {
 }
 
 tasks.bootJar{
-    enabled = true
+    enabled = false
 }
 
 tasks.jar{

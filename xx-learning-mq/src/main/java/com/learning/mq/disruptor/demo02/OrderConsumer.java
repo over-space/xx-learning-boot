@@ -1,6 +1,6 @@
 package com.learning.mq.disruptor.demo02;
 
-import com.learning.basic.disruptor.AbstractMessageConsumer;
+import com.learning.mq.disruptor.AbstractMessageConsumer;
 import org.slf4j.Logger;
 
 public class OrderConsumer extends AbstractMessageConsumer<OrderEvent> {

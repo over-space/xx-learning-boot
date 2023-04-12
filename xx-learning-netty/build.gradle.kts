@@ -1,4 +1,5 @@
 dependencies {
+    implementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
     implementation("io.netty:netty-all:4.1.89.Final")
     implementation("org.eclipse.jetty:jetty-server:9.4.51.v20230217")

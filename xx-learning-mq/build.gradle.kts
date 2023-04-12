@@ -1,4 +1,6 @@
 dependencies {
+    implementation(project(":xx-learning-springboot"))
+
     testImplementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation(project(mapOf("path" to ":xx-learning-common")))
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -9,4 +11,19 @@ dependencies {
     implementation("org.springframework.kafka:spring-kafka:2.9.6")
     implementation("org.apache.rocketmq:rocketmq-client:4.9.4")
     implementation("com.lmax:disruptor:3.4.4")
+}
+
+tasks.withType<Jar> {
+    enabled  = true
+    manifest {
+        attributes["Start-Class"] = "com.learning.hadoop.HadoopApplication"
+    }
+}
+
+tasks.bootJar{
+    enabled = false
+}
+
+tasks.jar{
+    enabled = false
 }
