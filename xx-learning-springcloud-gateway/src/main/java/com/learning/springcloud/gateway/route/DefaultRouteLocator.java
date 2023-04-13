@@ -1,20 +1,16 @@
-package com.learning.seata.gateway.route;
+package com.learning.springcloud.gateway.route;
 
-import com.learning.seata.gateway.rate.limiter.DefaultGatewayRateLimiter;
+import com.learning.springcloud.gateway.rate.limiter.DefaultGatewayRateLimiter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cloud.gateway.filter.factory.StripPrefixGatewayFilterFactory;
 import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.cloud.gateway.route.builder.BooleanSpec;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -27,9 +23,9 @@ import java.util.concurrent.TimeUnit;
  * @since 2023/4/10
  */
 @Component
-public class CustomRouteLocator implements RouteLocator {
+public class DefaultRouteLocator implements RouteLocator {
 
-    private static final Logger logger = LogManager.getLogger(CustomRouteLocator.class);
+    private static final Logger logger = LogManager.getLogger(DefaultRouteLocator.class);
 
     @Resource
     private RouteLocatorBuilder routeLocatorBuilder;
@@ -171,6 +167,32 @@ public class CustomRouteLocator implements RouteLocator {
 
                 return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
             });
+
+
+            return booleanSpec.uri("lb://xx-learning-seata-pay");
+        });
+
+        builder.route("gateway-test-05", predicateSpec -> {
+
+            BooleanSpec booleanSpec = predicateSpec.predicate(predicate -> true);
+
+            // 通过地址路由
+            booleanSpec = booleanSpec.and().path("/good/**")
+                    .or().host("**.baidu.com");
+
+            booleanSpec.filters(gatewayFilterSpec -> {
+
+                StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory = new StripPrefixGatewayFilterFactory();
+                StripPrefixGatewayFilterFactory.Config stripConfig = stripPrefixGatewayFilterFactory.newConfig();
+                stripConfig.setParts(1);
+
+                gatewayFilterSpec = gatewayFilterSpec.requestRateLimiter()
+                        .rateLimiter(DefaultGatewayRateLimiter.class, c -> {})
+                        .and();
+
+                return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
+            });
+
 
             return booleanSpec.uri("lb://xx-learning-seata-pay");
         });

@@ -1,4 +1,4 @@
-package com.learning.seata.gateway.rate.limiter;
+package com.learning.springcloud.gateway.rate.limiter;
 
 import com.alibaba.nacos.shaded.com.google.common.collect.Maps;
 import com.alibaba.nacos.shaded.com.google.common.util.concurrent.RateLimiter;
@@ -30,7 +30,7 @@ public class DefaultGatewayRateLimiter extends AbstractRateLimiter<DefaultGatewa
     private static final String CONFIGURATION_PROPERTY_NAME = "default-gateway-rate-limiter";
 
     protected DefaultGatewayRateLimiter(ConfigurationService configurationService) {
-        super(DefaultGatewayRateLimiter.Config.class, CONFIGURATION_PROPERTY_NAME, configurationService);
+        super(Config.class, CONFIGURATION_PROPERTY_NAME, configurationService);
     }
 
 

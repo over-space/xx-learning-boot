@@ -1,4 +1,4 @@
-package com.learning.seata.gateway.route;
+package com.learning.springcloud.gateway.route;
 
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.context.ApplicationEventPublisher;

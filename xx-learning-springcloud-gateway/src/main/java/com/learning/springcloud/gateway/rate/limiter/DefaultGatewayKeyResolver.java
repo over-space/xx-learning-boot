@@ -1,4 +1,4 @@
-package com.learning.seata.gateway.rate.limiter;
+package com.learning.springcloud.gateway.rate.limiter;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

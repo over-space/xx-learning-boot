@@ -21,6 +21,7 @@ include("xx-learning-mq")
 include("xx-learning-netty")
 include("xx-learning-zookeeper")
 include("xx-learning-webflux")
+include("xx-learning-springcloud-gateway")
 
 // 算法刷题模块
 include("xx-learning-leetcode")
@@ -37,5 +38,3 @@ include("xx-learning-seata:xx-learning-seata-goods")
 findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-seata-goods"
 include("xx-learning-seata:xx-learning-seata-pay")
 findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
-include("xx-learning-seata:xx-learning-seata-gateway")
-findProject(":xx-learning-seata:xx-learning-seata-gateway")?.name = "xx-learning-seata-gateway"

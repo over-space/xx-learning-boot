@@ -1,4 +1,4 @@
-package com.learning.seata.gateway.rate.limiter;
+package com.learning.springcloud.gateway.rate.limiter;
 
 import com.learning.springboot.ResponseResult;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
