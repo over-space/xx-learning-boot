@@ -6,6 +6,7 @@ dependencies {
 
     implementation("org.apache.spark:spark-core_2.12:2.4.8")
     implementation("org.apache.spark:spark-sql_2.12:2.4.8")
+    implementation("org.apache.spark:spark-hive_2.12:2.4.8")
     implementation("org.codehaus.janino:janino:3.0.16")
 }
 

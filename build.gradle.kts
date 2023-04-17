@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.8.10"
     kotlin("plugin.spring") version "1.8.10"
+    id("org.jetbrains.intellij") version "1.13.2" apply false
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
