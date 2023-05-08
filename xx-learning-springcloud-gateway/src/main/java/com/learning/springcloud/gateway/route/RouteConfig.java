@@ -15,26 +15,26 @@ import java.util.List;
  * @author over.li
  * @since 2023/4/13
  */
-@Configuration
-@Deprecated
+// @Configuration
+// @Deprecated
 public class RouteConfig {
 
-    @Bean
-    public RouterFunction<?> helloRouteFunction(){
-        RouterFunction<ServerResponse> route = RouterFunctions.route(
-                RequestPredicates.GET("/say/hello"),
-                request -> ServerResponse.ok().body(Mono.just("Hello World!"), String.class));;
-
-
-        for (String path : getPath()) {
-            final String url = path.replace("**", "hello");
-
-            route = route.andRoute(
-                    RequestPredicates.GET(url),
-                    request -> ServerResponse.ok().body(Mono.just("hello " + url), String.class));
-        }
-        return route;
-    }
+    // @Bean
+    // public RouterFunction<?> helloRouteFunction(){
+    //     RouterFunction<ServerResponse> route = RouterFunctions.route(
+    //             RequestPredicates.GET("/say/hello"),
+    //             request -> ServerResponse.ok().body(Mono.just("Hello World!"), String.class));;
+    //
+    //
+    //     for (String path : getPath()) {
+    //         final String url = path.replace("**", "hello");
+    //
+    //         route = route.andRoute(
+    //                 RequestPredicates.GET(url),
+    //                 request -> ServerResponse.ok().body(Mono.just("hello " + url), String.class));
+    //     }
+    //     return route;
+    // }
 
     public List<String> getPath(){
         return Lists.newArrayList("/menu/**",

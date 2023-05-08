@@ -1,6 +1,7 @@
 package com.learning.springcloud.gateway.route;
 
 import com.learning.springcloud.gateway.rate.limiter.DefaultGatewayRateLimiter;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cloud.gateway.filter.factory.StripPrefixGatewayFilterFactory;
@@ -9,10 +10,13 @@ import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.BooleanSpec;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -195,6 +199,37 @@ public class DefaultRouteLocator implements RouteLocator {
 
 
             return booleanSpec.uri("lb://xx-learning-seata-pay");
+        });
+
+        builder.route("gateway-test-06", predicateSpec -> {
+
+            BooleanSpec booleanSpec = predicateSpec.predicate(predicate -> true);
+
+            // 通过地址路由
+            booleanSpec = booleanSpec.and().path("/download/**")
+                    .or().header("x-download", "1|2|3");
+
+            booleanSpec.filters(gatewayFilterSpec -> {
+
+                StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory = new StripPrefixGatewayFilterFactory();
+                StripPrefixGatewayFilterFactory.Config stripConfig = stripPrefixGatewayFilterFactory.newConfig();
+                stripConfig.setParts(1);
+
+                gatewayFilterSpec = gatewayFilterSpec.requestRateLimiter()
+                        .rateLimiter(DefaultGatewayRateLimiter.class, c -> {})
+                        .and();
+
+                gatewayFilterSpec = gatewayFilterSpec.modifyResponseBody(DataBuffer.class, DataBuffer.class, ((exchange, dataBuffer) -> {
+                    return Mono.just(dataBuffer);
+                }));
+
+                FileUtils.sizeOf(new File(""));
+
+                return gatewayFilterSpec.filter(stripPrefixGatewayFilterFactory.apply(stripConfig));
+            });
+
+
+            return booleanSpec.uri("http://127.0.0.1:8080");
         });
 
         Flux<Route> routes = builder.build().getRoutes();

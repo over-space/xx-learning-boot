@@ -4,6 +4,7 @@ dependencies {
     runtimeOnly(libs.bundles.jdbc.database)
 
     api("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-actuator")
     api("org.springframework.boot:spring-boot-starter-webflux")
     api("org.springframework.cloud:spring-cloud-starter-gateway")
     api("org.springframework.cloud:spring-cloud-starter-openfeign")

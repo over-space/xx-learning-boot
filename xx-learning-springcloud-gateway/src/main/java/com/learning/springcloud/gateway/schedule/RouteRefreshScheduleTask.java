@@ -20,7 +20,7 @@ public class RouteRefreshScheduleTask {
     @Resource
     private RouteRefreshEventPublisher routeRefreshEventPublisher;
 
-    @Scheduled(initialDelay = 1000 * 1, fixedDelay = 1000 * 5)
+    @Scheduled(initialDelay = 1000 * 1, fixedDelay = 1000 * 30)
     public void refresh(){
         logger.info("schedule task refresh route...");
         routeRefreshEventPublisher.refresh();
