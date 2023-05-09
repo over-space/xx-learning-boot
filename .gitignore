@@ -48,6 +48,9 @@ logs/
 **/nacos-2.2.1/data/
 !**/nacos-2.2.1/bin/
 !**/nacos-2.2.1/target/
+!**/seata-1.6.1/bin/
+!**/seata-1.6.1/target/
+
 
 # Except this file !.gitignore
 target
