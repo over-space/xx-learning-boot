@@ -45,7 +45,10 @@ project/target/
 ### CUSTOM ###
 !**/sharding-proxy-5.3.1/bin
 **/nacos-2.2.1/data/
-!**/nacos-2.2.1/bin/
+!**/nacos-2.2.1/bin/shutdown.cmd
+!**/nacos-2.2.1/bin/startup.cmd
+!**/nacos-2.2.1/bin/shutdown.sh
+!**/nacos-2.2.1/bin/startup.sh
 !**/nacos-2.2.1/target/
 !**/seata-1.6.1/bin/
 !**/seata-1.6.1/target/
