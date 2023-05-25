@@ -38,3 +38,8 @@ include("xx-learning-seata:xx-learning-seata-goods")
 findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-seata-goods"
 include("xx-learning-seata:xx-learning-seata-pay")
 findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
+
+// kv-config 项目
+include("xx-learning-kvconfig")
+include("xx-learning-kvconfig:xx-learning-kvconfig-service")
+findProject(":xx-learning-kvconfig:xx-learning-kvconfig-service")?.name = "xx-learning-kvconfig-service"
