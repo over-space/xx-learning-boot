@@ -55,6 +55,8 @@ public class ImageUtil {
 
             index++;
         }
+
+        FileUtils.delete(tempFile);
     }
 
     public static void pressImage(String srcImageFilePath,
