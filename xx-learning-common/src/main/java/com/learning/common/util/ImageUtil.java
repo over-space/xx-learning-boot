@@ -26,8 +26,9 @@ public class ImageUtil {
     public static void main(String[] args) throws IOException {
 
         batchPressImage("/Users/flipos/Downloads/230528",
-                "/Users/flipos/Downloads/WechatIMG705.png",
+                "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
                 1F);
+
 
     }
 
