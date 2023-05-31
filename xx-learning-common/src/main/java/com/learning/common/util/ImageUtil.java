@@ -1,15 +1,18 @@
 package com.learning.common.util;
 
-import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Position;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
-import javax.imageio.ImageIO;
 
 /**
  * @author over.li
@@ -19,79 +22,113 @@ public class ImageUtil {
 
     protected static final Logger logger = LogManager.getLogger(com.learning.common.util.FileUtil.class);
 
+
     public static void main(String[] args) throws IOException {
 
-        // pressImage("/Users/flipos/Downloads/LEE03999.JPG",
-        //         "/Users/flipos/Downloads/WechatIMG705.png",
-        //         10, 50,
-        //         1F);
-
-        // pressImage("/Users/flipos/Downloads/LEE03999.JPG",
-        //         "/Users/flipos/Downloads/WechatIMG705.png",
-        //         "/Users/flipos/Downloads/230528-LOGO/",
-        //         10, 50,
-        //         1F);
-
-        File dir = new File("/Users/flipos/Downloads/230528");
-        for (File file : dir.listFiles()) {
-
-            logger.info("file : {}", file);
-
-            pressImage(file.getPath(),
-                    "/Users/flipos/Downloads/WechatIMG705.png",
-                    "/Users/flipos/Downloads/230528-LOGO/",
-                    10, 50,
-                    1F);
-        }
-
-        // pressImage("/Users/flipos/Downloads/LEE03999.JPG",
-        //         "/Users/flipos/Downloads/WechatIMG705.png",
-        //         10, 50,
-        //         1F);
+        batchPressImage("/Users/flipos/Downloads/230528",
+                "/Users/flipos/Downloads/WechatIMG705.png",
+                1F);
 
     }
 
-    public static void pressImage(String srcImageFilePath, String pressImgFilePath,
-            String destPath, int x, int y, float alpha) throws IOException {
-        File srcImageFile = FileUtil.file(srcImageFilePath);
+    public static void batchPressImage(String srcImgFileDir,
+                                       String pressImgFilePath,
+                                       float alpha) throws IOException {
+
         File pressImgFile = FileUtil.file(pressImgFilePath);
+        File tempFile = File.createTempFile("tmp_" + UUID.randomUUID(), ".png");
+        Thumbnails.of(pressImgFile).scale(0.6F).toFile(tempFile);
 
-        // 读取图片和Logo
-        BufferedImage srcImage = ImageIO.read(srcImageFile);
-        BufferedImage pressImage = ImageIO.read(pressImgFile);
+        BufferedImage pressImg = ImageIO.read(tempFile);
 
-        float scale = srcImage.getWidth() / pressImage.getWidth() / 2.0F;
+        int index = 1;
+        File dir = new File(srcImgFileDir);
+        for (File file : dir.listFiles()) {
+
+            logger.info("file : {}, index: {}", file, index);
+
+            pressImage(file.getPath(),
+                    pressImg,
+                    srcImgFileDir + "/LOGO/",
+                    alpha);
+
+            index++;
+        }
+    }
+
+    public static void pressImage(String srcImageFilePath,
+                                  BufferedImage pressImg,
+                                  String destPath,
+                                  float alpha) throws IOException {
+        File srcImageFile = FileUtil.file(srcImageFilePath);
+
+        Thumbnails.Builder<File> srcImageBuilder = Thumbnails.of(srcImageFile).scale(1);
+
+        float scale = 0.6F;// Math.min((float) srcImageBuilder.asBufferedImage().getWidth() / (float)pressBufferedImage.getWidth(), 1.0F);
 
         logger.info("scale : {}", scale);
 
-        // 水印图片大小
-        File tempFile;
-        if (scale >= 1) {
-            tempFile = pressImgFile;
-        } else if(scale > 0F){
-            tempFile = File.createTempFile("tmp_" + UUID.randomUUID().toString(), ".png");
-            ImgUtil.scale(pressImgFile, tempFile, scale);
-            tempFile.deleteOnExit();
-        } else {
-            tempFile = File.createTempFile("tmp_" + UUID.randomUUID().toString(), ".png");
-            ImgUtil.scale(pressImgFile, tempFile, 0.15F);
-            tempFile.deleteOnExit();
+        File outFile = FileUtil.file(destPath + srcImageFile.getName());
+
+        FileUtils.forceMkdirParent(outFile);
+
+        srcImageBuilder.watermark(TopLeft.TOP_LEFT_100, pressImg, alpha)
+                .toFile(outFile);
+
+    }
+
+
+    public static void pressImage(String srcImageFilePath,
+                                  File pressImgFile,
+                                  String destPath,
+                                  float alpha) throws IOException {
+        pressImage(srcImageFilePath, ImageIO.read(pressImgFile), destPath, alpha);
+    }
+
+    public static void pressImage(String srcImageFilePath,
+                                  String pressImgFilePath,
+                                  String destPath,
+                                  float alpha) throws IOException {
+        File srcImageFile = FileUtil.file(srcImageFilePath);
+        File pressImgFile = FileUtil.file(pressImgFilePath);
+
+        Thumbnails.Builder<File> srcImageBuilder = Thumbnails.of(srcImageFile).scale(1);
+        BufferedImage pressBufferedImage = Thumbnails.of(pressImgFile).scale(1).asBufferedImage();
+
+        logger.info("image width:{}, height:{}", srcImageBuilder.asBufferedImage().getWidth(), srcImageBuilder.asBufferedImage().getHeight());
+        logger.info("press width:{}, height:{}", pressBufferedImage.getWidth(), pressBufferedImage.getHeight());
+
+        float scale = 0.6F;// Math.min((float) srcImageBuilder.asBufferedImage().getWidth() / (float)pressBufferedImage.getWidth(), 1.0F);
+
+        logger.info("scale : {}", scale);
+
+        File tempFile = File.createTempFile("tmp_" + UUID.randomUUID(), ".png");
+        Thumbnails.of(pressImgFile).scale(scale).toFile(tempFile);
+
+        File outFile = FileUtil.file(destPath + srcImageFile.getName());
+
+        srcImageBuilder.watermark(TopLeft.TOP_LEFT_100, ImageIO.read(tempFile), alpha)
+                .toFile(outFile);
+
+        FileUtils.delete(tempFile);
+    }
+
+    static class TopLeft implements Position {
+
+        public static final Position TOP_LEFT_100 = new TopLeft(100, 100);
+
+        private int x;
+
+        private int y;
+
+        public TopLeft(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
 
-        BufferedImage tmpPressImage = ImageIO.read(tempFile);
-
-        // 坐标从左上角开始计算。
-        x = -srcImage.getWidth() / 2 + tmpPressImage.getWidth() / 2 + x;
-        y = -srcImage.getHeight() / 2 + tmpPressImage.getHeight() / 2 + y;
-
-        ImgUtil.pressImage(
-                srcImageFile,
-                cn.hutool.core.io.FileUtil.file(destPath + srcImageFile.getName()),
-                ImgUtil.read(tempFile), // 水印图片
-                x, // x坐标修正值。 默认在中间，偏移量相对于中间偏移
-                y, // y坐标修正值。 默认在中间，偏移量相对于中间偏移
-                alpha
-        );
-
+        @Override
+        public Point calculate(int enclosingWidth, int enclosingHeight, int width, int height, int insetLeft, int insetRight, int insetTop, int insetBottom) {
+            return new Point(insetLeft + x, insetTop + y);
+        }
     }
 }

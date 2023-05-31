@@ -4,6 +4,7 @@ dependencies {
     api(libs.bundles.alibaba.commons)
     implementation(project(mapOf("path" to ":xx-learning-logger")))
     implementation("cn.hutool:hutool-all:5.8.19")
+    implementation("net.coobird:thumbnailator:0.4.19")
 }
 
 tasks.bootJar{
