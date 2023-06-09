@@ -1,13 +1,11 @@
-package com.learning.flink
+package com.learning.flink.transformation
 
 import com.learning.logger.BaseTest
 import org.apache.flink.api.java.functions.KeySelector
 import org.apache.flink.api.scala.ExecutionEnvironment
-import org.apache.flink.configuration.{Configuration, RestOptions}
 import org.apache.flink.streaming.api.functions.co.CoMapFunction
+import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
 import org.junit.jupiter.api.Test
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.streaming.api.scala._
 
 /**
  * @author over.li
