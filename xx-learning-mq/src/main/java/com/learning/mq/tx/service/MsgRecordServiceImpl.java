@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.learning.mq.tx.bo.MessageBody;
 import com.learning.mq.tx.entity.MsgRecordEntity;
 import com.learning.mq.tx.repository.MsgRecordRepository;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

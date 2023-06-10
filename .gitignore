@@ -44,16 +44,22 @@ project/target/
 
 ### CUSTOM ###
 !**/sharding-proxy-5.3.1/bin
-logs/
 **/nacos-2.2.1/data/
-!**/nacos-2.2.1/bin/
+!**/nacos-2.2.1/bin/shutdown.cmd
+!**/nacos-2.2.1/bin/startup.cmd
+!**/nacos-2.2.1/bin/shutdown.sh
+!**/nacos-2.2.1/bin/startup.sh
 !**/nacos-2.2.1/target/
+!**/seata-1.6.1/bin/
+!**/seata-1.6.1/target/
+
 
 # Except this file !.gitignore
 target
 .vscode
 .DS_Store
 /logs
+logs/
 *.log
 node_modules
 test/derby.log

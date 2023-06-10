@@ -10,5 +10,4 @@ dependencies {
     implementation("com.alibaba.fastjson2:fastjson2:2.0.24")
     implementation(libs.bundles.alibaba.commons)
     implementation(libs.bundles.jdbc.database)
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
 }

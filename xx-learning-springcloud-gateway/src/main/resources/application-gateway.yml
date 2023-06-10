@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: xx-learning-seata-pay
+          uri: lb://xx-learning-seata-pay
+          predicates:
+            - Path=/pay/**
+          filters:
+            - StripPrefix=1
+#            - name: RequestRateLimiter
+#              args:
+                # 自定义限流规则
+#                rate-limiter: "#{@defaultGatewayRateLimiter}"
+                # 返回限流的key
+#                key-resolver: "#{@defaultGatewayKeyResolver}"
+                # 如果返回的key是空的话，则不进行限流
+#                deny-empty-key: false
+                # 限流后向客户端返回的响应码429,请求太多
+#                status-code: TOO_MANY_REQUESTS
+                # 每次请求申请几个令牌  default-gateway-rate-limiter 的值是在 defaultGatewayRateLimiter 中定义的。
+#                default-gateway-rate-limiter.requestedTokens: 1
+
+        - id: xx-learning-seata-order
+          uri: lb://xx-learning-seata-order
+          predicates:
+            - Path=/order/**
+
+        - id: xx-learning-seata-goods
+          uri: lb://xx-learning-seata-goods
+          predicates:
+            - Path=/goods/**

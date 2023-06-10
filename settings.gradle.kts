@@ -21,6 +21,7 @@ include("xx-learning-mq")
 include("xx-learning-netty")
 include("xx-learning-zookeeper")
 include("xx-learning-webflux")
+include("xx-learning-springcloud-gateway")
 
 // 算法刷题模块
 include("xx-learning-leetcode")
@@ -28,8 +29,7 @@ include("xx-learning-leetcode")
 // 秒杀系统学习模块
 include("xx-learning-seckill")
 
-// seata学习模块
-include("xx-learning-seata")
+// SEATA学习模块
 include("xx-learning-seata:xx-learning-seata-common")
 findProject(":xx-learning-seata:xx-learning-seata-common")?.name = "xx-learning-seata-common"
 include("xx-learning-seata:xx-learning-seata-order")
@@ -39,3 +39,7 @@ findProject(":xx-learning-seata:xx-learning-seata-goods")?.name = "xx-learning-s
 include("xx-learning-seata:xx-learning-seata-pay")
 findProject(":xx-learning-seata:xx-learning-seata-pay")?.name = "xx-learning-seata-pay"
 
+// kv-config 项目
+include("xx-learning-kvconfig")
+include("xx-learning-kvconfig:xx-learning-kvconfig-service")
+findProject(":xx-learning-kvconfig:xx-learning-kvconfig-service")?.name = "xx-learning-kvconfig-service"
