@@ -4,7 +4,7 @@ import com.learning.flink.FlinkBaseTest
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.functions.{AggregateFunction, ReduceFunction}
 import org.apache.flink.streaming.api.TimeCharacteristic
-import org.apache.flink.streaming.api.scala.createTypeInformation
+import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.scala.function.ProcessWindowFunction
 import org.apache.flink.streaming.api.windowing.assigners.{SlidingProcessingTimeWindows, TumblingEventTimeWindows, TumblingProcessingTimeWindows}
 import org.apache.flink.streaming.api.windowing.time.Time
@@ -147,12 +147,17 @@ class WindowsWordCountTest extends FlinkBaseTest {
 
         )
 
-        dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness[MyEvent](Duration.ZERO)
+        var outputTag = OutputTag[MyEvent]("late");
+
+        // dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness[MyEvent](Duration.ZERO)
+        val stream = dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forMonotonousTimestamps[MyEvent]()
           .withTimestampAssigner(new SerializableTimestampAssigner[MyEvent] {
-              override def extractTimestamp(element: MyEvent, recordTimestamp: Long): Long = element.time
+              override def extractTimestamp(element: MyEvent, recordTimestamp: Long): Long = element.eventTime
           })
         ).keyBy(_.username)
           .window(TumblingEventTimeWindows.of(Time.seconds(2))) // 滚动时间窗口，窗口大小 2 秒。
+          .allowedLateness(Time.seconds(0))
+          .sideOutputLateData(outputTag)
           .reduce(new ReduceFunction[MyEvent] {
               override def reduce(value1: MyEvent, value2: MyEvent): MyEvent = {
                   MyEvent(value1.username, value1.url + "," + value2.url, 0)
@@ -164,10 +169,86 @@ class WindowsWordCountTest extends FlinkBaseTest {
                   }
                   println("key: " + key + "\twindows_time: " + context.window.getStart + " ~ " + context.window.getEnd)
               }
-          }).print()
+          })
+
+        stream.print("nomal");
+        stream.getSideOutput(outputTag).print("late");
+
         env.execute()
     }
 
+    @Test
+    def testOrderEventTimeWindow02(): Unit = {
+        val env = getStreamExecutionEnvironment()
+
+        env.setParallelism(1)
+
+        var outputTag = OutputTag[MyEvent]("late");
+
+        val stream = env.socketTextStream("127.0.0.1", 8088)
+          .map(x => {
+              val array = x.trim.split(" ")
+              MyEvent(array(0).trim, array(1).trim, array(2).trim.toLong)
+          })
+          .assignTimestampsAndWatermarks(WatermarkStrategy.forMonotonousTimestamps[MyEvent]().withTimestampAssigner(new SerializableTimestampAssigner[MyEvent] {
+              override def extractTimestamp(element: MyEvent, recordTimestamp: Long): Long = element.eventTime
+          })) // 有序流
+          .keyBy(_.username)
+          .window(TumblingEventTimeWindows.of(Time.seconds(2))) // 滚动窗口 2 秒
+          .sideOutputLateData(outputTag)
+          .reduce(new ReduceFunction[MyEvent] {
+              override def reduce(value1: MyEvent, value2: MyEvent): MyEvent = MyEvent(value1.username, value1.url + "," + value2.url, 0)
+          }, new ProcessWindowFunction[MyEvent, MyEvent, String, TimeWindow] {
+              override def process(key: String, context: Context, elements: Iterable[MyEvent], out: Collector[MyEvent]): Unit = {
+                  println("key: " + key + "\twindows_time: " + context.window.getStart + " ~ " + context.window.getEnd)
+                  for (elem <- elements) {
+                      out.collect(elem)
+                  }
+                  println("-------------------------------------------------------------------------------------------")
+              }
+          })
+        stream.print("normal");
+        stream.getSideOutput(outputTag).print("late")
+        env.execute("testEventTimeWindow02")
+    }
+
+    @Test
+    def testNoOrderEventTimeWindow02(): Unit = {
+        val env = getStreamExecutionEnvironment()
+
+        env.setParallelism(1)
+
+        // 侧输出流
+        var outputTag = OutputTag[MyEvent]("late");
+
+        val stream = env.socketTextStream("127.0.0.1", 8088)
+          .map(x => {
+              val array = x.trim.split(" ")
+              MyEvent(array(0).trim, array(1).trim, array(2).trim.toLong)
+          })
+          // 无序流 延迟 1s 触发。
+          .assignTimestampsAndWatermarks(WatermarkStrategy. forBoundedOutOfOrderness[MyEvent](Duration.ofSeconds(1))
+            .withTimestampAssigner(new SerializableTimestampAssigner[MyEvent] {
+              override def extractTimestamp(element: MyEvent, recordTimestamp: Long): Long = element.eventTime
+          }))
+          .keyBy(_.username)
+          .window(TumblingEventTimeWindows.of(Time.seconds(2))) // 滚动窗口 2 秒
+          .sideOutputLateData(outputTag)
+          .reduce(new ReduceFunction[MyEvent] {
+              override def reduce(value1: MyEvent, value2: MyEvent): MyEvent = MyEvent(value1.username, value1.url + "," + value2.url, 0)
+          }, new ProcessWindowFunction[MyEvent, MyEvent, String, TimeWindow] {
+              override def process(key: String, context: Context, elements: Iterable[MyEvent], out: Collector[MyEvent]): Unit = {
+                  println("key: " + key + "\twindows_time: " + context.window.getStart + " ~ " + context.window.getEnd)
+                  for (elem <- elements) {
+                      out.collect(elem)
+                  }
+                  println("-------------------------------------------------------------------------------------------")
+              }
+          })
+        stream.print("normal");
+        stream.getSideOutput(outputTag).print("late")
+        env.execute("testEventTimeWindow02")
+    }
 
     @Test
     def testWindow01(): Unit = {
