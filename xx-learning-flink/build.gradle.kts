@@ -8,6 +8,11 @@ dependencies {
     implementation("org.apache.flink:flink-streaming-scala_2.12:1.15.4")
     implementation("org.apache.flink:flink-clients:1.15.4")
     implementation("org.apache.kafka:kafka_2.12:3.4.1")
-//    implementation("org.apache.flink:flink-connector-kafka_2.12:1.15.4")
     testImplementation("org.apache.flink:flink-runtime-web:1.15.4")
+
+    implementation("org.apache.flink:flink-table-planner_2.12:1.15.4")
+    implementation("org.apache.flink:flink-table-api-scala-bridge_2.12:1.15.4")
+
+    implementation("org.apache.flink:flink-cep-scala_2.12:1.15.4")
+
 }

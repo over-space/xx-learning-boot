@@ -125,38 +125,24 @@ class WindowsWordCountTest extends FlinkBaseTest {
         val env = getStreamExecutionEnvironment()
         env.setParallelism(1)
         val dsStream = env.fromElements(
-
-            // username, url, time
-            MyEvent("zs", "/user?time=1000", 1000L),
-            MyEvent("zs", "/order?time=1500", 1500L),
-            MyEvent("zs", "/product?id=1&time=2000", 2000L),
-            MyEvent("zs", "/product?id=2&time=2300", 2300L),
-            MyEvent("zs", "/product?id=3&time=1800", 1800L),
-            // MyEvent("zs", "/product?id=5&time=4100", 4100L),
-            // MyEvent("zs", "/product?id=5&time=5000", 5000L),
-            // MyEvent("zs", "/product?id=5&time=7000", 7000L),
-            // MyEvent("zs", "/product?id=5&time=9000", 9000L),
-
-            MyEvent("ls", "/user?time=1000", 1000L),
-            MyEvent("ls", "/order?time=1500", 1500L),
-            MyEvent("ls", "/product?id=1&time=2000", 2000L),
-            MyEvent("ls", "/product?id=2&time=2300", 2300L),
-            MyEvent("ls", "/product?id=3&time=1800", 1800L),
-
-            MyEvent("zs", "/product?id=3&time=1700", 1700L)
-
+            // username, url, eventTime
+            MyEvent("zs", "/product?time=1000", 1000L),
+            MyEvent("zs", "/product?time=1500", 1500L),
+            MyEvent("zs", "/product?time=2000", 2000L),
+            MyEvent("zs", "/product?time=2300", 2300L),
+            MyEvent("zs", "/product?time=4100", 4100L),
+            MyEvent("zs", "/product?time=1800", 1800L),
+            MyEvent("zs", "/product?time=1700", 1700L)
         )
 
         var outputTag = OutputTag[MyEvent]("late");
 
-        // dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness[MyEvent](Duration.ZERO)
-        val stream = dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forMonotonousTimestamps[MyEvent]()
+        val stream = dsStream.assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness[MyEvent](Duration.ZERO)
           .withTimestampAssigner(new SerializableTimestampAssigner[MyEvent] {
               override def extractTimestamp(element: MyEvent, recordTimestamp: Long): Long = element.eventTime
           })
         ).keyBy(_.username)
           .window(TumblingEventTimeWindows.of(Time.seconds(2))) // 滚动时间窗口，窗口大小 2 秒。
-          .allowedLateness(Time.seconds(0))
           .sideOutputLateData(outputTag)
           .reduce(new ReduceFunction[MyEvent] {
               override def reduce(value1: MyEvent, value2: MyEvent): MyEvent = {
@@ -171,9 +157,8 @@ class WindowsWordCountTest extends FlinkBaseTest {
               }
           })
 
-        stream.print("nomal");
+        stream.print("normal");
         stream.getSideOutput(outputTag).print("late");
-
         env.execute()
     }
 

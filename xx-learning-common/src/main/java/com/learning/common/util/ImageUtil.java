@@ -13,6 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author over.li
@@ -25,16 +28,38 @@ public class ImageUtil {
 
     public static void main(String[] args) throws IOException {
 
-        batchPressImage("/Users/flipos/Downloads/230528",
-                "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
-                1F);
+        // batchPressImage("/Users/flipos/Desktop/230702-无水印版",
+        //         "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
+        //         1F);
 
+        methodInfo();
 
+        CompletableFuture.runAsync( () -> {
+
+            CompletableFuture.runAsync(() -> {
+
+                System.out.println("------------");
+                methodInfo();
+                System.out.println("------------");
+
+            }).join();
+            methodInfo();
+        }).join();
+
+    }
+
+    private static void methodInfo(){
+       String method = Thread.currentThread().getStackTrace()[2].getClassName()
+                + "#" + Thread.currentThread().getStackTrace()[2].getMethodName()
+                + " " + Thread.currentThread().getStackTrace()[2].getLineNumber();
+        System.out.println(method);
     }
 
     public static void batchPressImage(String srcImgFileDir,
                                        String pressImgFilePath,
                                        float alpha) throws IOException {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
 
         File pressImgFile = FileUtil.file(pressImgFilePath);
         File tempFile = File.createTempFile("tmp_" + UUID.randomUUID(), ".png");
@@ -48,10 +73,16 @@ public class ImageUtil {
 
             logger.info("file : {}, index: {}", file, index);
 
-            pressImage(file.getPath(),
-                    pressImg,
-                    srcImgFileDir + "/LOGO/",
-                    alpha);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    pressImage(file.getPath(),
+                            pressImg,
+                            srcImgFileDir + "/LOGO/",
+                            alpha);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }, executorService);
 
             index++;
         }
