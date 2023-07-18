@@ -29,13 +29,16 @@ public class ImageUtil {
 
     public static void main(String[] args) throws IOException {
 
-        batchPressImage("/Users/flipos/Desktop/230715",
-                "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
-                1F);
+        final String sourceImageFileDir = "/Users/flipos/Desktop/230715";
+        final String destImageFileDir = "/Users/flipos/Desktop/230715-水印版";
 
+        final String pressImgFilePath = "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png";
+
+        batchPressImage(sourceImageFileDir, destImageFileDir, pressImgFilePath, 1F);
     }
     
-    public static void batchPressImage(String srcImgFileDir,
+    public static void batchPressImage(String sourceImageFileDir,
+                                       String destImageFileDir,
                                        String pressImgFilePath,
                                        float alpha) throws IOException {
 
@@ -48,7 +51,7 @@ public class ImageUtil {
         BufferedImage pressImg = ImageIO.read(tempFile);
 
         int index = 1;
-        File dir = new File(srcImgFileDir);
+        File dir = new File(sourceImageFileDir);
         for (File file : dir.listFiles()) {
 
             if(!StringUtils.endsWithIgnoreCase(file.getPath(), ".JPG")){
@@ -62,7 +65,7 @@ public class ImageUtil {
                 try {
                     pressImage(file.getPath(),
                             pressImg,
-                            srcImgFileDir + "/LOGO/",
+                            destImageFileDir,
                             alpha);
                 } catch (Exception e) {
                     e.printStackTrace();
