@@ -14,5 +14,7 @@ dependencies {
     implementation("org.apache.flink:flink-table-api-scala-bridge_2.12:1.15.4")
 
     implementation("org.apache.flink:flink-cep-scala_2.12:1.15.4")
+    implementation("org.apache.flink:flink-csv:1.15.4")
+    implementation("org.apache.flink:flink-connector-files:1.15.4")
 
 }

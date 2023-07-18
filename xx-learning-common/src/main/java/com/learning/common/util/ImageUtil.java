@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Position;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,33 +29,12 @@ public class ImageUtil {
 
     public static void main(String[] args) throws IOException {
 
-        // batchPressImage("/Users/flipos/Desktop/230702-无水印版",
-        //         "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
-        //         1F);
-
-        methodInfo();
-
-        CompletableFuture.runAsync( () -> {
-
-            CompletableFuture.runAsync(() -> {
-
-                System.out.println("------------");
-                methodInfo();
-                System.out.println("------------");
-
-            }).join();
-            methodInfo();
-        }).join();
+        batchPressImage("/Users/flipos/Desktop/230715",
+                "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png",
+                1F);
 
     }
-
-    private static void methodInfo(){
-       String method = Thread.currentThread().getStackTrace()[2].getClassName()
-                + "#" + Thread.currentThread().getStackTrace()[2].getMethodName()
-                + " " + Thread.currentThread().getStackTrace()[2].getLineNumber();
-        System.out.println(method);
-    }
-
+    
     public static void batchPressImage(String srcImgFileDir,
                                        String pressImgFilePath,
                                        float alpha) throws IOException {
@@ -71,6 +51,11 @@ public class ImageUtil {
         File dir = new File(srcImgFileDir);
         for (File file : dir.listFiles()) {
 
+            if(!StringUtils.endsWithIgnoreCase(file.getPath(), ".JPG")){
+                logger.warn("file:{}, error:{}", file, "不支持的图片类型。");
+                continue;
+            }
+
             logger.info("file : {}, index: {}", file, index);
 
             CompletableFuture.runAsync(() -> {
@@ -79,7 +64,7 @@ public class ImageUtil {
                             pressImg,
                             srcImgFileDir + "/LOGO/",
                             alpha);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }, executorService);
