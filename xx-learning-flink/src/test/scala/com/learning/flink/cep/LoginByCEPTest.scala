@@ -5,6 +5,7 @@ import org.apache.flink.cep.PatternSelectFunction
 import org.apache.flink.cep.scala.CEP
 import org.apache.flink.cep.scala.pattern.Pattern
 import org.apache.flink.streaming.api.scala._
+import org.apache.flink.streaming.api.windowing.time.Time
 import org.junit.jupiter.api.Test
 
 import java.util
@@ -15,7 +16,6 @@ import java.util
  */
 class LoginByCEPTest extends FlinkBaseTest {
 
-    case class LoginEvent(id: Long, username: String, loginType: String, loginTime: Long)
 
     @Test
     def testCase01(): Unit = {
@@ -66,41 +66,53 @@ class LoginByCEPTest extends FlinkBaseTest {
 
         val env = getStreamExecutionEnvironment()
 
-        // env.setParallelism(1)
-        //
-        // //1、准备数据流
-        // val stream = env.fromCollection(Array(
-        //     new LoginEvent(1, "张三", "fail", 1577080469000L),
-        //     new LoginEvent(2, "张三", "fail", 1577080470000L),
-        //     new LoginEvent(3, "张三", "fail", 1577080472000L),
-        //     new LoginEvent(4, "李四", "fail", 1577080469000L),
-        //     new LoginEvent(5, "李四", "succ", 1577080473000L),
-        //     new LoginEvent(6, "张三", "fail", 1577080477000L)
-        // ))
-        //
-        //
-        // val value = stream.assignAscendingTimestamps(event => event.loginTime)
-        //
+        env.setParallelism(1)
+
+        // 1、准备数据流
+        val stream = env.fromElements(
+            new LoginEvent(1, "张三", "fail", 1577080469000L),
+            new LoginEvent(2, "张三", "fail", 1577080470000L),
+            new LoginEvent(3, "张三", "fail", 1577080472000L),
+            new LoginEvent(4, "李四", "fail", 1577080469000L),
+            new LoginEvent(5, "李四", "succ", 1577080473000L),
+            new LoginEvent(6, "张三", "fail", 1577080477000L)
+        ).assignAscendingTimestamps(_.loginTime)
+
         // val pattern = Pattern.begin[LoginEvent]("start")
         //   .where(_.loginType.equals("fail"))
-        //   .timesOrMore(3)
+        //   .timesOrMore(3) // 至少 3 次
         //   .greedy
-        //   .within(Time.seconds(10))
-        //
-        // val ps = CEP.pattern(value.keyBy(_.username), pattern)
-        //
-        // ps.select(patternSelectFunction => {
-        //     val list = patternSelectFunction.get("start").get.toList
-        //
-        //     val sb = new StringBuilder()
-        //     sb.append("用户名:").append(list(0).username).append(" 恶意登录，")
-        //     for (i <- 0 until list.size) {
-        //         sb.append(s"第${i + 1}次登录失败的时间是:").append(list(i).loginTime).append(" , ").append(s"id 是${list(i).id}")
-        //     }
-        //     sb.toString()
-        // }).print()
-        //
-        // env.execute();
+        //   .within(Time.seconds(10)) // 10秒内有效
+
+        val pattern = Pattern.begin[LoginEvent]("start").where(_.loginType.equals("fail"))
+          .followedBy("followedBy1").where(_.loginType.equals("fail"))
+          .followedBy("followedBy2").where(_.loginType.equals("fail"))
+          .timesOrMore(2)
+          .within(Time.seconds(10))
+
+        val patternStream = CEP.pattern(stream.keyBy(_.username), pattern)
+
+        val result = patternStream.select(new LoginEventSelect())
+
+        result.print()
+
+        env.execute("flink cep job")
+    }
+
+    class LoginEventSelect extends PatternSelectFunction[LoginEvent, String]{
+        override def select(pattern: util.Map[String, util.List[LoginEvent]]): String = {
+
+            val events = pattern.get("start")
+
+            val sb = new StringBuilder().append("用户名：").append(events.get(0).username).append("恶意登录，")
+
+            for(i <- 0 until events.size()){
+                val event = events.get(i)
+                sb.append(s"第${i + 1}次登录失败，登录失败时间：").append(event.loginTime).append(";")
+            }
+
+            sb.toString()
+        }
     }
 
 }

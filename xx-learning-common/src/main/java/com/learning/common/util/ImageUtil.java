@@ -9,14 +9,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.awt.Point;
 import java.io.IOException;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 /**
  * @author over.li
@@ -28,15 +31,43 @@ public class ImageUtil {
 
 
     public static void main(String[] args) throws IOException {
-
-        final String sourceImageFileDir = "/Users/flipos/Desktop/230715";
-        final String destImageFileDir = "/Users/flipos/Desktop/230715-水印版";
-
+        final String day = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         final String pressImgFilePath = "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png";
 
-        batchPressImage(sourceImageFileDir, destImageFileDir, pressImgFilePath, 1F);
+        final File sourceImageFile = new File("/Users/flipos/Desktop/12630730");
+
+        Set<String> sourceImageFileDirList = new HashSet<>();
+
+        int index = 1;
+        for (File file : sourceImageFile.listFiles()) {
+
+            if(!StringUtils.endsWithIgnoreCase(file.getName(), "JPG")){
+                continue;
+            }
+
+            File destDir = new File(String.format("/Users/flipos/Desktop/%s-无水印版(%d)", day, index));
+
+            if(destDir.exists() && destDir.listFiles() != null && destDir.listFiles().length >= 189){
+                index++;
+            }
+
+            FileUtils.copyFile(file, new File(destDir, file.getName()));
+
+            if(!sourceImageFileDirList.contains(destDir.getPath())) {
+                sourceImageFileDirList.add(destDir.getPath());
+            }
+        }
+
+        index = 1;
+        for (String sourceImageFileDir : sourceImageFileDirList) {
+            final String destDir = String.format("/Users/flipos/Desktop/%s-水印版(%d)/", day, index);
+            batchPressImage(sourceImageFileDir, destDir, pressImgFilePath, 1);
+            index++;
+        }
+
+        logger.info("处理完成...");
     }
-    
+
     public static void batchPressImage(String sourceImageFileDir,
                                        String destImageFileDir,
                                        String pressImgFilePath,
@@ -47,21 +78,23 @@ public class ImageUtil {
         File pressImgFile = FileUtil.file(pressImgFilePath);
         File tempFile = File.createTempFile("tmp_" + UUID.randomUUID(), ".png");
         Thumbnails.of(pressImgFile).scale(0.6F).toFile(tempFile);
-
         BufferedImage pressImg = ImageIO.read(tempFile);
 
         int index = 1;
         File dir = new File(sourceImageFileDir);
+
+        List<CompletableFuture> futureList = new ArrayList<>();
+
         for (File file : dir.listFiles()) {
 
-            if(!StringUtils.endsWithIgnoreCase(file.getPath(), ".JPG")){
+            if (!StringUtils.endsWithIgnoreCase(file.getPath(), ".JPG")) {
                 logger.warn("file:{}, error:{}", file, "不支持的图片类型。");
                 continue;
             }
 
             logger.info("file : {}, index: {}", file, index);
 
-            CompletableFuture.runAsync(() -> {
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 try {
                     pressImage(file.getPath(),
                             pressImg,
@@ -72,8 +105,12 @@ public class ImageUtil {
                 }
             }, executorService);
 
+            futureList.add(future);
+
             index++;
         }
+
+        CompletableFuture.allOf(futureList.toArray(new CompletableFuture[0])).join();
 
         FileUtils.delete(tempFile);
     }
