@@ -1,13 +1,16 @@
 package com.learning.flink.windows
 
 import com.learning.flink.FlinkBaseTest
+import org.apache.commons.math3.random.{GaussianRandomGenerator, JDKRandomGenerator}
 import org.apache.flink.api.common.eventtime.{SerializableTimestampAssigner, WatermarkStrategy}
 import org.apache.flink.api.common.functions.{AggregateFunction, ReduceFunction}
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.scala._
 import org.apache.flink.streaming.api.scala.function.ProcessWindowFunction
 import org.apache.flink.streaming.api.windowing.assigners.{SlidingProcessingTimeWindows, TumblingEventTimeWindows, TumblingProcessingTimeWindows}
+import org.apache.flink.streaming.api.windowing.evictors.TimeEvictor
 import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.windowing.triggers.ContinuousEventTimeTrigger
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow
 import org.apache.flink.util.Collector
 import org.junit.jupiter.api.Test
@@ -284,6 +287,35 @@ class WindowsWordCountTest extends FlinkBaseTest {
         env.execute("testEventTimeWindow02")
     }
 
+
+    @Test
+    def testWindow04(): Unit = {
+        case class Consume(username:String, time:Long, price:Long)
+
+        // val env = getStreamExecutionEnvironment()
+        //
+        // val stream = env.socketTextStream("127.0.0.1", 8099)
+        //   .assignTimestampsAndWatermarks(WatermarkStrategy.forBoundedOutOfOrderness[Consume](Duration.ofSeconds(5))
+        //     .withTimestampAssigner(new SerializableTimestampAssigner[Consume] {
+        //         override def extractTimestamp(element: Consume, recordTimestamp: Long): Long = element.time
+        //     }))
+        //
+        // val keyStream = stream.map(x => {
+        //     val array = x.trim.split(" ")
+        //     Consume(array(0).trim, array(1).toLong, array(2).trim.toLong)
+        // }).keyBy("username")
+        //
+        // val trigger = keyStream.window(TumblingEventTimeWindows.of(Time.days(1)))
+        //   .trigger(ContinuousEventTimeTrigger.of(Time.seconds(3)))
+        //
+        //
+        // trigger.evictor(TimeEvictor.of(Time.seconds(0), true))
+        //   .sum("price")
+        //   .print();
+
+        // env.execute("job")
+    }
+
     @Test
     def testWindow01(): Unit = {
 
@@ -292,6 +324,7 @@ class WindowsWordCountTest extends FlinkBaseTest {
         env.setStreamTimeCharacteristic(TimeCharacteristic.ProcessingTime)
 
         val stream = env.socketTextStream("127.0.0.1", 8088)
+
 
         stream.flatMap(x => x.split(" "))
           .map(x => (x, 1))

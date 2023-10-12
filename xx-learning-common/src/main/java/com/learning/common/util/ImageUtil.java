@@ -34,7 +34,8 @@ public class ImageUtil {
         final String day = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         final String pressImgFilePath = "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png";
 
-        final File sourceImageFile = new File("/Users/flipos/Desktop/12630730");
+        final File sourceImageFile = new File("/Users/flipos/Desktop/231006");
+        final int size = 130;
 
         Set<String> sourceImageFileDirList = new HashSet<>();
 
@@ -47,7 +48,7 @@ public class ImageUtil {
 
             File destDir = new File(String.format("/Users/flipos/Desktop/%s-无水印版(%d)", day, index));
 
-            if(destDir.exists() && destDir.listFiles() != null && destDir.listFiles().length >= 189){
+            if(destDir.exists() && destDir.listFiles() != null && destDir.listFiles().length > size){
                 index++;
             }
 
@@ -66,6 +67,7 @@ public class ImageUtil {
         }
 
         logger.info("处理完成...");
+        System.exit(0);
     }
 
     public static void batchPressImage(String sourceImageFileDir,
