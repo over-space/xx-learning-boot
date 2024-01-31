@@ -7,12 +7,16 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +28,28 @@ public final class QRCodeUtil {
     private static final Logger logger = LogManager.getLogger(QRCodeUtil.class);
 
     private QRCodeUtil() {
+    }
+
+    public static void main(String[] args) throws IOException, WriterException {
+
+        generateQRCode("卡券兑换清单-优惠券300");
+        generateQRCode("卡券兑换清单-优惠券500");
+
+    }
+
+    private static void generateQRCode(String fileName) throws IOException, WriterException {
+        List<String> contentList = FileUtils.readLines(new File(String.format("/Users/flipos/Desktop/%s.txt", fileName)), "UTF-8");
+
+        int index = 1;
+        for (String content : contentList) {
+
+            byte[] bytes = generateQRCode(content, 5);
+
+            FileUtil.base64ToImage(bytes, String.format("/Users/flipos/Desktop/%s/%s.png", fileName, content));
+
+            logger.info("fileName : {}, 已生成: {}", fileName, index);
+            index++;
+        }
     }
 
     public static byte[] generateQRCode(String content, int margin) throws IOException, WriterException {
@@ -56,7 +82,7 @@ public final class QRCodeUtil {
     }
 
     private static BitMatrix updateBitMatrixMargin(BitMatrix matrix, int margin) {
-        if(margin <= 0){
+        if (margin <= 0) {
             return matrix;
         }
 

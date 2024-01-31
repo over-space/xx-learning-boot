@@ -38,6 +38,19 @@ public final class FileUtil {
         return FileUtils.readFileToByteArray(file);
     }
 
+    public static void base64ToImage(byte[] base64, String targetFilePath){
+        try {
+            // 创建父文件夹
+            FileUtils.forceMkdirParent(new File(targetFilePath));
+
+            FileOutputStream imageOutFile = new FileOutputStream(targetFilePath);
+            imageOutFile.write(base64);
+            imageOutFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String base64ToImage(String base64, String targetFilePath){
 
         String fileName = targetFilePath + "/1.jpg";
