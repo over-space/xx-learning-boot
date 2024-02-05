@@ -6,8 +6,9 @@ include("xx-learning-common")
 include("xx-learning-springboot")
 
 // IDE插件开发模块
-// include("xx-learning-idea-plugin-client")
+//include("xx-learning-idea-plugin-client")
 include("xx-learning-idea-plugin-server")
+//include("xx-learning-idea-plugin-view")
 
 // 项目学习模块
 include("xx-learning-hadoop")

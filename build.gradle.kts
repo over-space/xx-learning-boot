@@ -1,10 +1,13 @@
+tasks.assemble{}
+
 plugins {
     java
+    idea
     id("org.springframework.boot") version "2.7.10"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     kotlin("jvm") version "1.8.10"
     kotlin("plugin.spring") version "1.8.10"
-    id("org.jetbrains.intellij") version "1.13.2" apply false
+    id("org.jetbrains.intellij") version "1.17.0" apply false
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -21,7 +24,7 @@ allprojects {
         gradlePluginPortal()
         google()
         mavenLocal()
-        if (project.name.contains("plugin-client")) {
+        if (project.name.contains("plugin-view")) {
         } else {
             maven { setUrl("https://maven.aliyun.com/repository/public") }
             maven { setUrl("https://maven.aliyun.com/repository/central") }
@@ -82,3 +85,4 @@ tasks.bootJar{
 tasks.jar{
     enabled = false
 }
+
