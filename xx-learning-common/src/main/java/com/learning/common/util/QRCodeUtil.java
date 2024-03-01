@@ -1,5 +1,10 @@
 package com.learning.common.util;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.event.AnalysisEventListener;
+import com.alibaba.excel.metadata.data.ReadCellData;
+import com.alibaba.fastjson2.JSON;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -7,7 +12,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,9 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author over.li
@@ -32,25 +37,89 @@ public final class QRCodeUtil {
 
     public static void main(String[] args) throws IOException, WriterException {
 
-        generateQRCode("卡券兑换清单-优惠券300");
-        generateQRCode("卡券兑换清单-优惠券500");
+        final String filePath = "/Users/flipos/Desktop/【她力量】优惠券";
 
+        List<String> excelFileList = Arrays.asList(
+                "300元她力量礼品卡赠送-风味加料兑换券.xlsx",
+                "300元她力量礼品卡赠送-满88元-10元优惠券.xlsx",
+                "300元她力量礼品卡赠送-沃乐送满80元减6元优惠券.xlsx",
+                "500元她力量礼品卡赠送-满88元-10元优惠券.xlsx",
+                "500元她力量礼品卡赠送-满158元-28元优惠券.xlsx",
+                "500元她力量礼品卡赠送-沃乐送满80元减6元优惠券.xlsx",
+                "500元她力量礼品卡赠送-指定中杯鲜榨果汁兑换券.xlsx",
+                "1000元她力量礼品卡赠送-满88元-10元优惠券.xlsx",
+                "1000元她力量礼品卡赠送-满158元-28元优惠券.xlsx",
+                "1000元她力量礼品卡赠送-指定中杯鲜榨果汁兑换券.xlsx"
+        );
+
+        for (String fileName : excelFileList) {
+            generateQRCodeByExcel(1, filePath, fileName);
+        }
     }
 
-    private static void generateQRCode(String fileName) throws IOException, WriterException {
-        List<String> contentList = FileUtils.readLines(new File(String.format("/Users/flipos/Desktop/%s.txt", fileName)), "UTF-8");
+    private static void generateQRCodeByExcel(int couponColumnIndex, String filePath, String fileName) throws IOException, WriterException {
+        EasyExcel.read(new File(String.format("%s/%s", filePath, fileName)), new AnalysisEventListener<Map<Integer, String>>() {
+
+            private final static List<String> couponList = new ArrayList<>(512);
+
+            @Override
+            public void invokeHead(Map<Integer, ReadCellData<?>> headMap, AnalysisContext context) {
+                super.invokeHead(headMap, context);
+            }
+
+            @Override
+            public void invoke(Map<Integer, String> integerStringMap, AnalysisContext analysisContext) {
+                String coupon = StringUtils.trim(integerStringMap.get(couponColumnIndex));
+                if(StringUtils.isNotBlank(coupon) && StringUtils.length(coupon) >= 5) {
+                    couponList.add(coupon);
+                }
+            }
+
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+                try {
+                    generateQRCode(filePath, fileName, couponList);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    couponList.clear();
+                }
+            }
+
+        }).sheet().doRead();
+    }
+
+    private static void generateQRCodeByText(String filePath, String fileName) throws IOException, WriterException {
+        List<String> contentList = FileUtils.readLines(new File(String.format("%s/%s.txt", filePath, fileName)), "UTF-8");
 
         int index = 1;
         for (String content : contentList) {
 
             byte[] bytes = generateQRCode(content, 5);
 
-            FileUtil.base64ToImage(bytes, String.format("/Users/flipos/Desktop/%s/%s.png", fileName, content));
+            FileUtil.base64ToImage(bytes, String.format("%s/%s/%s.png", filePath, fileName, content));
 
-            logger.info("fileName : {}, 已生成: {}", fileName, index);
             index++;
         }
+        logger.info("fileName : {}, total: {}", fileName, index - 1);
     }
+
+    private static void generateQRCode(String filePath, String fileName, List<String> contentList) throws IOException, WriterException {
+
+        fileName = StringUtils.substringBeforeLast(fileName, ".");
+
+        int index = 1;
+        for (String content : contentList) {
+
+            byte[] bytes = generateQRCode(content, 5);
+
+            FileUtil.base64ToImage(bytes, String.format("%s/%s/%s.png", filePath, fileName, content));
+
+            index++;
+        }
+        logger.info("fileName : {}, total: {}", fileName, index - 1);
+    }
+
 
     public static byte[] generateQRCode(String content, int margin) throws IOException, WriterException {
         return generateQRCode(content, 300, 300, margin, ErrorCorrectionLevel.H);

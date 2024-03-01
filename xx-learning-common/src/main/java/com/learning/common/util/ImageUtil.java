@@ -34,8 +34,8 @@ public class ImageUtil {
         final String day = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMdd"));
         final String pressImgFilePath = "/Users/flipos/Desktop/workspace/xx-learning-boot/xx-learning-common/src/main/resources/WechatIMG705.png";
 
-        final File sourceImageFile = new File("/Users/flipos/Desktop/240112");
-        final int size = 150;
+        final File sourceImageFile = new File("/Users/flipos/Desktop/240225");
+        final int size = 500;
 
         Set<String> sourceImageFileDirList = new HashSet<>();
 

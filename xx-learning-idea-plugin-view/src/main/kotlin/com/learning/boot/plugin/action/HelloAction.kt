@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
-import com.learning.boot.plugin.compose.App
 import com.learning.boot.plugin.layout.PreviewMessageCard
 import javax.swing.JComponent
 
